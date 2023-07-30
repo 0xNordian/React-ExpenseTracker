@@ -1,29 +1,26 @@
-.calendarDate{
-    width: 75px;
-    height: 75px;
+.expense-date {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    width: 5.5rem;
+    height: 5.5rem;
+    border: 1px solid #ececec;
+    background-color: #2a2a2a;
+    color: white;
+    border-radius: 12px;
     align-items: center;
-    border: 1px solid #fff;
-    border-radius: 5px;
-    background-color: #303030;
+    justify-content: center;
 }
 
-.month{
-    font-size: .7rem;
+.expense-date__month {
+    font-size: 0.75rem;
     font-weight: bold;
 }
 
-.year{
-    font-size: .6rem;
+.expense-date__year {
+    font-size: 0.75rem;
 }
 
-.day{
+.expense-date__day {
     font-size: 1.5rem;
     font-weight: bold;
-}
-
-.day, .month, .year{
-    color: #fff;
 }

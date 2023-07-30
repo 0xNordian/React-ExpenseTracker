@@ -9,10 +9,10 @@ const ExpenseDate = (props) => {
 
     return (
         <>
-            <div className={styles['calendarDate']}>
-                <div className={styles['month']}>{month}</div>
-                <div className={styles['year']}>{year}</div>
-                <div className={styles['day']}>{day}</div>
+            <div className={styles['expense-date']}>
+                <div className={styles['expense-date__month']}>{month}</div>
+                <div className={styles['expense-date__year']}>{year}</div>
+                <div className={styles['expense-date__day']}>{day}</div>
             </div>
         </>
     )
