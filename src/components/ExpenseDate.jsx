@@ -1,11 +1,11 @@
 import styles from './ExpenseDate.module.css'
 
 const ExpenseDate = (props) => {
-    const data = props.item;
-    const dateObj = new Date(data.date);
+    const expenseDate = props.dates;
+    const dateObj = new Date(expenseDate);
     const year = dateObj.getFullYear();
     const day = dateObj.getDate();
-    const month = data.date.toLocaleString('en-US', {month: 'long'});
+    const month = expenseDate.toLocaleString('en-US', {month: 'long'});
 
     return (
         <>

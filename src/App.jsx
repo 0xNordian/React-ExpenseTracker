@@ -1,5 +1,4 @@
 import ExpenseItem from "./components/ExpenseItem"
-import ExpenseDate from "./components/ExpenseDate";
 
 const App = () => {
   const expenses = [

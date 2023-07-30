@@ -2,15 +2,15 @@ import styles from './ExpenseItem.module.css'
 import ExpenseDate from './ExpenseDate'
 
 const ExpenseItem = (props) => {
-    const data = props.expense;
-    const expenses = props.expenses;
+    const expenseData = props.expense;
+    const expenseDate = props.expense.date;
 
     return (
         <div className={styles['expense-item']}>
-            <ExpenseDate item={data}/>
+            <ExpenseDate dates={expenseDate}/>
             <div className={styles['expense-item__description']}>
-                <h2>{data.title}</h2>
-                <div className={styles['expense-item__price']}>${data.amount}</div>
+                <h2>{expenseData.title}</h2>
+                <div className={styles['expense-item__price']}>${expenseData.amount}</div>
             </div>
         </div>
     )
