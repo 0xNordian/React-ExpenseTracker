@@ -7,19 +7,30 @@ const ExpenseItem = (props) => {
     const expenseData = props.expense;
     const expenseDate = props.expense.date;
 
-    const [title, setTitle] = useState(expenseData.title);
-    const [isEditing, setIsEditing] = useState(false);
+    const [title, setTitle] = useState(() => {
+        return expenseData.title;
+    });
+
+    const [isEditing, setIsEditing] = useState(() => {
+        return false;
+    });
 
     const handleTitleChange = () => {
-        setIsEditing(true);
+        setIsEditing(() => {
+            return true;
+        });
     }
 
     const handleTitleInputChange = (event) => {
-        setTitle(event.target.value);
+        setTitle(() => {
+            return event.target.value;
+        });
     }
 
     const handleTitleSave = () => {
-        setIsEditing(false);
+        setIsEditing(() => {
+            return false;
+        });
     }
 
     return (
@@ -28,10 +39,11 @@ const ExpenseItem = (props) => {
             <div className={styles['expense-item__description']}>
                 {isEditing ? (
                     <input
-                    className={styles['expense_item__title-input']}
+                        className={styles['expense_item__title-input']}
                         type="text"
                         value={title}
                         onChange={handleTitleInputChange}
+                        onKeyDown={(event) => {'Enter' === event.key && handleTitleSave();}}
                         onBlur={handleTitleSave}
                         autoFocus // Automatically focus on the input when it becomes visible
                     />
