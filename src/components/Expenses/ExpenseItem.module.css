@@ -46,6 +46,12 @@
         flex: 1;
     }
 
+    .expense-item__description input{
+        margin-left: 1rem;
+        flex: 1;
+        /* margin-right: 16.24rem; */
+    }
+
     .expense-item__description h2 {
         font-size: 1.25rem;
     }
@@ -54,4 +60,13 @@
         font-size: 1.25rem;
         padding: 0.5rem 1.5rem;
     }
+}
+
+.expense_item__title-input{
+    display: flex;
+}
+
+.expense_item__title{
+    display: flex;
+    /*justify-content: space-between;*/
 }
