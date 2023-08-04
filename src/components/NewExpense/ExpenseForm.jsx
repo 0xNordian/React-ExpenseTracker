@@ -2,74 +2,89 @@ import React, { useState } from 'react'
 import styles from './ExpenseForm.module.css'
 
 const ExpenseForm = () => {
-    const [title, setTitle] = useState(() => {
-        return "";
+    const [userInput, setUserInput] = useState(() => {
+        return {
+            enteredTitle: '',
+            enteredDate: '',
+            enteredAmount: ''
+        }
     });
 
-    const [date, setDate] = useState(() => {
-        return "";
-    });
-
-    const [expenseAmount, setExpenseAmount] = useState(() => {
-        return 0
-    });
-
-    const expenseTitleHandler = (event) => {
-        setTitle(() => {
-            return event.target.value;
+    const titleChengeHandler = (event) => {
+        setUserInput(() => {
+            return {
+                ...userInput,
+                enteredTitle: event.target.value,
+            }
         })
     };
 
     const expenseDateHandler = (event) => {
-        setDate(() => {
-            return event.target.value;
+        setUserInput(() => { 
+            return {
+                ...userInput,
+                enteredDate: event.target.value,
+            }
         })
     };
 
     const expenseAmountHandler = (event) => {
-        setExpenseAmount(() => {
-            return event.target.value;
-        })
+        const value = event.target.value;
+        if (!isNaN(value)) {
+            setUserInput(() => {
+                return {
+                    ...userInput,
+                    enteredAmount: Number(value),
+                }
+            })
+        } else {
+            throw new Error('Input must be of type number')
+        }
     };
 
     return (
-        //className={styles['form']}
         <form>
             <div className={styles["new-expense__controls"]}>
                 <div className={styles["new-expense__control"]}>
+                    <label htmlFor='expense-title'>Title</label>
                     <input
                         type="text"
                         name="expense-title"
-                        placeholder="Expense Title"
-                        value={title}
-                        onChange={expenseTitleHandler}
+                        id="expense-title"
+                        placeholder="(E.g: Pizza)"
+                        value={userInput.enteredTitle}
+                        onChange={titleChengeHandler}
                     />
                 </div>
                 <div className={styles["new-expense__control"]}>
+                    <label htmlFor='expense-date'>Date</label>
                     <input
                         type="date"
                         name="expense-date"
+                        id="expense-date"
                         placeholder=""
                         min="2023-01-01"
                         max="2026-12-31"
-                        value={date}
+                        value={userInput.enteredDate}
                         onChange={expenseDateHandler}
                     />
                 </div>
                 <div className={styles["new-expense__control"]}>
+                    <label htmlFor='expense-amount'>Amount</label>
                     <input
                         type="number"
                         name="expense-amount"
+                        id="expense-amount"
                         placeholder="Amount"
                         min="0.01"
                         step="0.01"
-                        value={expenseAmount}
+                        value={userInput.enteredAmount}
                         onChange={expenseAmountHandler}
                     />
                 </div>
             </div>
             <div className={styles["new-expense__actions"]}>
-            <button type="submit" className={styles['form-btn']}>Create</button>
+                <button type="submit">Create</button>
             </div>
         </form>
     )
