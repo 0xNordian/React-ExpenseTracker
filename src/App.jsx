@@ -1,4 +1,5 @@
 import ExpenseCard from "./components/Expenses/ExpenseCard";
+import NewExpense from "./components/NewExpense/NewExpense";
 
 const App = () => {
   const expenses = [
@@ -49,6 +50,7 @@ const App = () => {
   return (
     <>
       <h2>Lets get started!</h2>
+        <NewExpense />
         <ExpenseCard expensesArr={expenses}/>
     </>
   )
