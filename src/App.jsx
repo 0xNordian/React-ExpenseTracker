@@ -38,6 +38,12 @@ const App = () => {
       amount: 1250,
       date: new Date(2023, 6 - 1, 7),
     },
+    {
+      id: 'e7',
+      title: 'Apple AirPods',
+      amount: 275,
+      date: new Date(2023, 4 - 1, 2),
+    }
   ];
 
   return (

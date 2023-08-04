@@ -7,9 +7,16 @@ const ExpenseItem = (props) => {
     const expenseData = props.expense;
     const expenseDate = props.expense.date;
 
+    //TITLE===>
     const [title, setTitle] = useState(() => {
         return expenseData.title;
     });
+
+    const handleTitleInputChange = (event) => {
+        setTitle(() => {
+            return event.target.value;
+        });
+    }
 
     const [isEditing, setIsEditing] = useState(() => {
         return false;
@@ -21,18 +28,11 @@ const ExpenseItem = (props) => {
         });
     }
 
-    const handleTitleInputChange = (event) => {
-        setTitle(() => {
-            return event.target.value;
-        });
-    }
-
     const handleTitleSave = () => {
         setIsEditing(() => {
             return false;
         });
     }
-
     return (
         <Card className={styles['expense-item']}>
             <ExpenseDate dates={expenseDate} />
@@ -48,7 +48,7 @@ const ExpenseItem = (props) => {
                         autoFocus // Automatically focus on the input when it becomes visible
                     />
                 ) : (
-                    <h2 className={styles['expense_item__title']} onClick={handleTitleChange}>
+                    <h2 className={styles['expense_item__title']}>
                         {title}
                     </h2>
                 )}
