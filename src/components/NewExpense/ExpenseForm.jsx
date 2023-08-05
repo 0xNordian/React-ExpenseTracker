@@ -10,37 +10,50 @@ const ExpenseForm = () => {
         }
     });
 
-    const titleChengeHandler = (event) => {
-        setUserInput(() => {
-            return {
-                ...userInput,
-                enteredTitle: event.target.value,
-            }
-        })
-    };
+    // const titleChengeHandler = (event) => {
+    //     setUserInput((prevState) => {
+    //         return {
+    //             ...prevState,
+    //             enteredTitle: event.target.value,
+    //         }
+    //     })
+    // };
 
-    const expenseDateHandler = (event) => {
-        setUserInput(() => { 
-            return {
-                ...userInput,
-                enteredDate: event.target.value,
-            }
-        })
-    };
+    // const expenseDateHandler = (event) => {
+    //     setUserInput((prevState) => { 
+    //         return {
+    //             ...prevState,
+    //             enteredDate: event.target.value,
+    //         }
+    //     })
+    // };
 
-    const expenseAmountHandler = (event) => {
-        const value = event.target.value;
-        if (!isNaN(value)) {
-            setUserInput(() => {
-                return {
-                    ...userInput,
-                    enteredAmount: Number(value),
-                }
-            })
-        } else {
-            throw new Error('Input must be of type number')
+    // const expenseAmountHandler = (event) => {
+    //     const value = event.target.value;
+    //     if (!isNaN(value)) {
+    //         setUserInput((prevState) => {
+    //             return {
+    //                 ...prevState,
+    //                 enteredAmount: Number(value),
+    //             }
+    //         })
+    //     } else {
+    //         throw new Error('Input must be of type number')
+    //     }
+    // };
+
+    const inputHandler = (id, value) => {
+        switch(id){
+            case "title":
+                return setUserInput((prevState) => ({...prevState, enteredTitle: value}));
+            case "date":
+                return setUserInput((prevState) => ({...prevState, enteredDate: value}));
+            case "amount":
+                return setUserInput((prevState) => ({...prevState, enteredAmount: value}));
+            default:
+                return null;
         }
-    };
+    }
 
     return (
         <form>
@@ -53,7 +66,8 @@ const ExpenseForm = () => {
                         id="expense-title"
                         placeholder="(E.g: Pizza)"
                         value={userInput.enteredTitle}
-                        onChange={titleChengeHandler}
+                        // onChange={titleChengeHandler}
+                        onChange={(e) => inputHandler("title", e.target.value)}
                     />
                 </div>
                 <div className={styles["new-expense__control"]}>
@@ -66,7 +80,8 @@ const ExpenseForm = () => {
                         min="2023-01-01"
                         max="2026-12-31"
                         value={userInput.enteredDate}
-                        onChange={expenseDateHandler}
+                        // onChange={expenseDateHandler}
+                        onChange={(e) => inputHandler("date", e.target.value)}
                     />
                 </div>
                 <div className={styles["new-expense__control"]}>
@@ -79,7 +94,8 @@ const ExpenseForm = () => {
                         min="0.01"
                         step="0.01"
                         value={userInput.enteredAmount}
-                        onChange={expenseAmountHandler}
+                        // onChange={expenseAmountHandler}
+                        onChange={(e) => inputHandler("amount", e.target.value)}
                     />
                 </div>
             </div>

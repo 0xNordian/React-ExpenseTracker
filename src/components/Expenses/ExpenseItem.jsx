@@ -33,6 +33,7 @@ const ExpenseItem = (props) => {
             return false;
         });
     }
+    
     return (
         <Card className={styles['expense-item']}>
             <ExpenseDate dates={expenseDate} />
