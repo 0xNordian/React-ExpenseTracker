@@ -39,3 +39,13 @@
     display: grid;
     place-content: center;
 }
+
+.new-expense__control .title-alert {
+    border: 2px solid red; /* Change the border width to 2px */
+}
+
+.error-message{
+    color: white;
+    font-size: smaller;
+    margin: .1rem .2rem;
+}
