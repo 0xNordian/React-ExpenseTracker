@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './ExpenseForm.module.css';
 
 const ExpenseForm = () => {
@@ -11,8 +11,9 @@ const ExpenseForm = () => {
         };
     });
 
-const [titleError, setTitleError] = useState(false);
-const [id, setId] = useState([1])
+    const [titleError, setTitleError] = useState(false);
+    const [id, setId] = useState([1])
+    const [newExpenses, setNewExpenses] = useState([])
 
     const inputHandler = (id, value) => {
         switch (id) {
@@ -31,10 +32,14 @@ const [id, setId] = useState([1])
         }
     };
 
+    useEffect(() => {
+        console.log("New Expenses Array: ", newExpenses);
+    }, [newExpenses]);
+
     const submitHandler = (e) => {
         e.preventDefault();
 
-        setId((prevId) => [ ...prevId, prevId.length + 1])
+        setId((prevId) => [...prevId, prevId.length + 1])
         const newExpenseDate = new Date(userInput.enteredDate)
         const expenseData = {
             id: `e${id[id.length - 1]}`,
@@ -42,7 +47,15 @@ const [id, setId] = useState([1])
             amount: userInput.enteredAmount,
             date: newExpenseDate.toLocaleDateString()
         };
+        setNewExpenses(prevExpenses => [...prevExpenses, expenseData]);
+        setUserInput({
+            id: "",
+            enteredTitle: "",
+            enteredDate: "",
+            enteredAmount: "",
+        });
         console.log("expense data: ", expenseData)
+        console.log("New Expenses Array: ", newExpenses);
     };
 
     return (
@@ -50,7 +63,7 @@ const [id, setId] = useState([1])
             <div className={styles['new-expense__controls']}>
                 <div className={styles['new-expense__control']}>
                     <label htmlFor='expense-title'>Title</label>
-                    
+
                     <input
                         className={titleError ? styles['title-alert'] : ''}
                         type='text'
