@@ -4,13 +4,15 @@ import styles from './ExpenseForm.module.css';
 const ExpenseForm = () => {
     const [userInput, setUserInput] = useState(() => {
         return {
+            id: "",
             enteredTitle: '',
             enteredDate: '',
             enteredAmount: ''
         };
     });
-    
+
 const [titleError, setTitleError] = useState(false);
+const [id, setId] = useState([1])
 
     const inputHandler = (id, value) => {
         switch (id) {
@@ -29,8 +31,22 @@ const [titleError, setTitleError] = useState(false);
         }
     };
 
+    const submitHandler = (e) => {
+        e.preventDefault();
+
+        setId((prevId) => [ ...prevId, prevId.length + 1])
+        const newExpenseDate = new Date(userInput.enteredDate)
+        const expenseData = {
+            id: `e${id[id.length - 1]}`,
+            title: userInput.enteredTitle,
+            amount: userInput.enteredAmount,
+            date: newExpenseDate.toLocaleDateString()
+        };
+        console.log("expense data: ", expenseData)
+    };
+
     return (
-        <form>
+        <form onSubmit={submitHandler}>
             <div className={styles['new-expense__controls']}>
                 <div className={styles['new-expense__control']}>
                     <label htmlFor='expense-title'>Title</label>
