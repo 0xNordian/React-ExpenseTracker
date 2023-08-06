@@ -7,7 +7,7 @@ const NewExpense = (props) => {
         const expenseData = {
             ...enteredExpenseData
         };
-        console.log("NewEspense Data: ", expenseData)
+        // console.log("NewEspense Data: ", expenseData)
         props.onAddExpense(expenseData);
     };
 

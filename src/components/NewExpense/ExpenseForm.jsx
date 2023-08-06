@@ -13,7 +13,8 @@ const ExpenseForm = (props) => {
 
     const [titleError, setTitleError] = useState(false);
     const [id, setId] = useState([1])
-    // const [newExpenses, setNewExpenses] = useState([])
+    const todayDate = new Date()
+    const [isFuture, setIsFuture] = useState(false); 
 
     const inputHandler = (id, value) => {
         switch (id) {
@@ -22,6 +23,7 @@ const ExpenseForm = (props) => {
                 setTitleError(value.length < 3); // Set titleError to true if the title length is less than 3
                 break;
             case 'date':
+                setIsFuture(value > todayDate);
                 setUserInput((prevState) => ({ ...prevState, enteredDate: value }));
                 break;
             case 'amount':
@@ -31,10 +33,6 @@ const ExpenseForm = (props) => {
                 break;
         }
     };
-
-    // useEffect(() => {
-    //     console.log("New Expenses Array: ", newExpenses);
-    // }, [newExpenses]);
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -48,8 +46,6 @@ const ExpenseForm = (props) => {
             // date: newExpenseDate.toLocaleDateString()
             date: newExpenseDate
         };
-        // console.log("expense data: ", expenseData)
-        // setNewExpenses(prevExpenses => [...prevExpenses, expenseData]);
 
         //Lift submitted data
         props.onSavedExpenseData(expenseData);
@@ -88,11 +84,12 @@ const ExpenseForm = (props) => {
                         name='expense-date'
                         id='expense-date'
                         placeholder=''
-                        min='2023-01-01'
+                        min='2022-01-01'
                         max='2026-12-31'
                         value={userInput.enteredDate}
                         onChange={(e) => inputHandler('date', e.target.value)}
                     />
+                    {isFuture && <p className={styles['error-message']}>Date cannot be in the future.</p>}
                 </div>
                 <div className={styles['new-expense__control']}>
                     <label htmlFor='expense-amount'>Amount</label>
