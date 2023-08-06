@@ -13,8 +13,7 @@ const ExpenseForm = (props) => {
 
     const [titleError, setTitleError] = useState(false);
     const [id, setId] = useState([1])
-    const todayDate = new Date()
-    const [isFuture, setIsFuture] = useState(false); 
+    const [isFuture, setIsFuture] = useState(false);
 
     const inputHandler = (id, value) => {
         switch (id) {
@@ -59,6 +58,20 @@ const ExpenseForm = (props) => {
         });
     };
 
+    const formatDate = (date) => {
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1;
+        const day = date.getDate();
+
+        const formattedMonth = month < 10 ? `0${month}` : `${month}`;
+        const formattedDay = day < 10 ? `0${day}` : `${day}`;
+
+        return `${year}-${formattedMonth}-${formattedDay}`;
+    };
+
+    const todayDate = new Date();
+    const maxDate = formatDate(todayDate); // Format today's date with leading zeros
+
 
     return (
         <form onSubmit={submitHandler}>
@@ -84,8 +97,8 @@ const ExpenseForm = (props) => {
                         name='expense-date'
                         id='expense-date'
                         placeholder=''
-                        min='2022-01-01'
-                        max='2026-12-31'
+                        min='2020-01-01'
+                        max={maxDate}
                         value={userInput.enteredDate}
                         onChange={(e) => inputHandler('date', e.target.value)}
                     />

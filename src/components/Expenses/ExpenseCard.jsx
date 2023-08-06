@@ -16,7 +16,7 @@ const ExpenseCard = (props) => {
         if (selectedYear === "") {
             return true;
         } else if (selectedYear === "All") {
-            return item;
+            return item
         } else {
             return item.date.getFullYear().toString() === selectedYear;
         }
