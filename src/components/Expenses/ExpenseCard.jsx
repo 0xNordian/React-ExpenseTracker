@@ -13,6 +13,7 @@ const ExpenseCard = (props) => {
             </>
         )
     }
+
     return (
         <>
             <Card className={styles['expenses']}>

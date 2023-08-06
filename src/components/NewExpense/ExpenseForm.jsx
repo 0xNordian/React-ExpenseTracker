@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './ExpenseForm.module.css';
 
-const ExpenseForm = () => {
+const ExpenseForm = (props) => {
     const [userInput, setUserInput] = useState(() => {
         return {
             id: "",
@@ -13,7 +13,7 @@ const ExpenseForm = () => {
 
     const [titleError, setTitleError] = useState(false);
     const [id, setId] = useState([1])
-    const [newExpenses, setNewExpenses] = useState([])
+    // const [newExpenses, setNewExpenses] = useState([])
 
     const inputHandler = (id, value) => {
         switch (id) {
@@ -32,9 +32,9 @@ const ExpenseForm = () => {
         }
     };
 
-    useEffect(() => {
-        console.log("New Expenses Array: ", newExpenses);
-    }, [newExpenses]);
+    // useEffect(() => {
+    //     console.log("New Expenses Array: ", newExpenses);
+    // }, [newExpenses]);
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -45,18 +45,24 @@ const ExpenseForm = () => {
             id: `e${id[id.length - 1]}`,
             title: userInput.enteredTitle,
             amount: userInput.enteredAmount,
-            date: newExpenseDate.toLocaleDateString()
+            // date: newExpenseDate.toLocaleDateString()
+            date: newExpenseDate
         };
-        setNewExpenses(prevExpenses => [...prevExpenses, expenseData]);
+        // console.log("expense data: ", expenseData)
+        // setNewExpenses(prevExpenses => [...prevExpenses, expenseData]);
+
+        //Lift submitted data
+        props.onSavedExpenseData(expenseData);
+
+        //Restart form
         setUserInput({
             id: "",
             enteredTitle: "",
             enteredDate: "",
             enteredAmount: "",
         });
-        console.log("expense data: ", expenseData)
-        console.log("New Expenses Array: ", newExpenses);
     };
+
 
     return (
         <form onSubmit={submitHandler}>
