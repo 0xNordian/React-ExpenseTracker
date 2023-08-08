@@ -3,16 +3,16 @@ import ExpenseForm from './ExpenseForm'
 import styles from './NewExpense.module.css'
 
 const NewExpense = (props) => {
-    const saveExpenseDataHandlerLiftUp = (enteredExpenseData) => {
+    const saveExpenseLiftUp = (enteredExpenseData) => {
         const expenseData = {
             ...enteredExpenseData
         };
-        props.onAddExpense(expenseData);
+        props.addExpenseHandler(expenseData);
     };
 
     return (
         <div className={styles['new-expense']}>
-            <ExpenseForm onSavedExpenseData={saveExpenseDataHandlerLiftUp}/>
+            <ExpenseForm onSavedExpenseData={saveExpenseLiftUp}/>
         </div>
     )
 }

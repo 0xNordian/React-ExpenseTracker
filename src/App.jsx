@@ -13,10 +13,9 @@ const App = () => {
   return (
     <div className={styles['main-container']}>
       <div className={styles['container']}>
-        <NewExpense onAddExpense={addExpenseHandler} />
+        <NewExpense addExpenseHandler={addExpenseHandler}/>
         <ExpenseCard expensesArr={expenses} />
       </div>
-
     </div>
   )
 }

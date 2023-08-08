@@ -1,20 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styles from './ExpenseForm.module.css';
 
 const ExpenseForm = (props) => {
-    const [userInput, setUserInput] = useState(() => {
-        return {
-            id: "",
-            enteredTitle: '',
-            enteredDate: '',
-            enteredAmount: ''
-        };
-    });
-
+    const todayDate = new Date();
+    const maxDate = formatDate(todayDate); // Format today's date with leading zeros
+    // console.log("maxDate: ", maxDate)
     const [titleError, setTitleError] = useState(false);
     const [id, setId] = useState([1])
     const [isFuture, setIsFuture] = useState(false);
 
+    //! USER INPUT STATE
+    const [userInput, setUserInput] = useState(() => {
+        return {
+            id: '',
+            enteredTitle: '',
+            enteredDate: maxDate,
+            enteredAmount: ''
+        };
+    });
+
+    //! INPUT HANDLER FUNCTION
     const inputHandler = (id, value) => {
         switch (id) {
             case 'title':
@@ -22,8 +27,8 @@ const ExpenseForm = (props) => {
                 setTitleError(value.length < 3); // Set titleError to true if the title length is less than 3
                 break;
             case 'date':
-                setIsFuture(value > todayDate);
                 setUserInput((prevState) => ({ ...prevState, enteredDate: value }));
+                setIsFuture(value > todayDate);
                 break;
             case 'amount':
                 setUserInput((prevState) => ({ ...prevState, enteredAmount: value }));
@@ -33,6 +38,7 @@ const ExpenseForm = (props) => {
         }
     };
 
+    //! SUBMIT FORM FUNCTION
     const submitHandler = (e) => {
         e.preventDefault();
 
@@ -45,20 +51,21 @@ const ExpenseForm = (props) => {
             // date: newExpenseDate.toLocaleDateString()
             date: newExpenseDate
         };
-
-        //Lift submitted data
+        console.log("expenseData: ", expenseData)
+        //* LIFT SUBMITTED DATA
         props.onSavedExpenseData(expenseData);
 
-        //Restart form
+        //* RESTART FORM
         setUserInput({
             id: "",
             enteredTitle: "",
-            enteredDate: "",
+            enteredDate: maxDate,
             enteredAmount: "",
         });
     };
 
-    const formatDate = (date) => {
+    //! DATE FORMAT FUNCTION
+    function formatDate(date) {
         const year = date.getFullYear();
         const month = date.getMonth() + 1;
         const day = date.getDate();
@@ -67,18 +74,14 @@ const ExpenseForm = (props) => {
         const formattedDay = day < 10 ? `0${day}` : `${day}`;
 
         return `${year}-${formattedMonth}-${formattedDay}`;
-    };
-
-    const todayDate = new Date();
-    const maxDate = formatDate(todayDate); // Format today's date with leading zeros
-
+        // return `${formattedDay}-${formattedMonth}-${year}`;
+    }
 
     return (
         <form onSubmit={submitHandler}>
             <div className={styles['new-expense__controls']}>
                 <div className={styles['new-expense__control']}>
                     <label htmlFor='expense-title'>Title</label>
-
                     <input
                         className={titleError ? styles['title-alert'] : ''}
                         type='text'
@@ -99,7 +102,7 @@ const ExpenseForm = (props) => {
                         placeholder=''
                         min='2020-01-01'
                         max={maxDate}
-                        value={userInput.enteredDate}
+                        value={userInput.enteredDate || maxDate}
                         onChange={(e) => inputHandler('date', e.target.value)}
                     />
                     {isFuture && <p className={styles['error-message']}>Date cannot be in the future.</p>}
