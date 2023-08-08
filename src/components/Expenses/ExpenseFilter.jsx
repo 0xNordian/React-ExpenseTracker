@@ -2,15 +2,9 @@ import React, { useState } from 'react'
 import styles from './ExpenseFilter.module.css'
 
 const ExpenseFilter = (props) => {
-    const [setFilteredYear] = useState("");
-
     const filterYearHandler = (e) => {
-        const selectedYear = e.target.value;
-        setFilteredYear(selectedYear)
-        // console.log("filtered year: ",selectedYear)
-        props.onFilterExpense(selectedYear);
+        props.onFilterExpense(e.target.value);
     }
-
 
     return (
         <div className={styles['expenses-filter']}>

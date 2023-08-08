@@ -7,7 +7,6 @@ const ExpenseItem = (props) => {
     const expenseData = props.expense;
     const expenseDate = props.expense.date;
 
-    //TITLE===>
     const [title, setTitle] = useState(() => {
         return expenseData.title;
     });
@@ -33,7 +32,7 @@ const ExpenseItem = (props) => {
             return false;
         });
     }
-    
+
     return (
         <Card className={styles['expense-item']}>
             <ExpenseDate dates={expenseDate} />
@@ -44,7 +43,7 @@ const ExpenseItem = (props) => {
                         type="text"
                         value={title}
                         onChange={handleTitleInputChange}
-                        onKeyDown={(event) => {'Enter' === event.key && handleTitleSave();}}
+                        onKeyDown={(event) => { 'Enter' === event.key && handleTitleSave(); }}
                         onBlur={handleTitleSave}
                         autoFocus // Automatically focus on the input when it becomes visible
                     />
