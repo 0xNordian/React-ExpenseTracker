@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import ExpenseCard from "./components/Expenses/ExpenseCard";
 import NewExpense from "./components/NewExpense/NewExpense";
 import styles from './App.module.css'

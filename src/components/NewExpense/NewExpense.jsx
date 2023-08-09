@@ -7,8 +7,6 @@ const NewExpense = (props) => {
         const expenseData = {
             ...enteredExpenseData
         };
-        // console.log("newExpense", expenseData.id)
-        // props.deleteExp(expenseData.id)
         props.addExpenseHandler(expenseData);
     };
 
