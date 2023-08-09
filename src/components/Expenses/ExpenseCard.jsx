@@ -6,6 +6,7 @@ import { useState } from 'react';
 
 const ExpenseCard = (props) => {
     const [selectedYear, setSelectedYear] = useState("");
+    const [sortOrder, setSortOrder] = useState("asc");
 
     //! FILTERED YEAR SELECTED BY THE USER
     const filteredYear = (selectedYear) => {
@@ -25,8 +26,9 @@ const ExpenseCard = (props) => {
     });
 
     //! DYNAMIC EXPENSE CARD GENERATION
-    const expensesCards = filteredExpenses.map((expense) => <ExpenseItem key={expense.id} expense={expense} />);
-
+    const ascOrder = (a, b) => a.date - b.date;
+    const dscOrder = (a, b) => b.date - a.date;
+    const expensesCards = filteredExpenses.sort(sortOrder === "asc" ? ascOrder : dscOrder).map((expense) => <ExpenseItem key={expense.id} expense={expense} />);
     //! NO EXPENSE FOUND
     if (props.expensesArr.length === 0) {
         return (
@@ -46,17 +48,24 @@ const ExpenseCard = (props) => {
                 </Card>
             </>
         )
+    } else {
+        //! EXPENSE RENDER
+        return (
+            <>
+                <ExpenseFilter onFilterExpense={filteredYear} />
+                <Card className={styles['expenses']}>
+                <div className={styles['order']}>
+                    <select value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
+                        <option value='dsc'>⬇️</option>
+                        <option value='asc'>⬆️</option>
+                    </select>
+                </div>
+                    {expensesCards}
+                </Card>
+            </>
+        )
     }
 
-    //! EXPENSE RENDER
-    return (
-        <>
-            <ExpenseFilter onFilterExpense={filteredYear} />
-            <Card className={styles['expenses']}>
-                {expensesCards}
-            </Card>
-        </>
-    )
 }
 
 export default ExpenseCard;
