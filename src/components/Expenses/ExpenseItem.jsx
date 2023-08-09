@@ -7,9 +7,7 @@ const ExpenseItem = (props) => {
     const expenseData = props.expense;
     const expenseDate = props.expense.date;
 
-    const [title, setTitle] = useState(() => {
-        return expenseData.title;
-    });
+    const [title, setTitle] = useState(() => expenseData.title);
 
     const handleTitleInputChange = (event) => {
         setTitle(() => {

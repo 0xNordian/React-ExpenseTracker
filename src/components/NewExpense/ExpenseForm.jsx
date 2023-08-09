@@ -3,8 +3,7 @@ import styles from './ExpenseForm.module.css';
 
 const ExpenseForm = (props) => {
     const todayDate = new Date();
-    const maxDate = formatDate(todayDate); // Format today's date with leading zeros
-    // console.log("maxDate: ", maxDate)
+    const maxDate = formatDate(todayDate); // Format today's date with leading zero
     const [titleError, setTitleError] = useState(false);
     const [id, setId] = useState([1])
     const [isFuture, setIsFuture] = useState(false);

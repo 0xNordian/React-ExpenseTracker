@@ -8,9 +8,9 @@ const ExpenseCard = (props) => {
     const [selectedYear, setSelectedYear] = useState("");
 
     //! FILTERED YEAR SELECTED BY THE USER
-    const filteredYear = (year) => {
-        setSelectedYear(year);
-        console.log("Selected year from expense card: ", year);
+    const filteredYear = (selectedYear) => {
+        setSelectedYear(selectedYear);
+        // console.log("Selected year from expense card: ", year);
     }
 
     //! EXPENSES FROM APP.jsx FILTERED BY USER SELECTION
@@ -26,14 +26,23 @@ const ExpenseCard = (props) => {
 
     //! DYNAMIC EXPENSE CARD GENERATION
     const expensesCards = filteredExpenses.map((expense) => <ExpenseItem key={expense.id} expense={expense} />);
-    
+
     //! NO EXPENSE FOUND
-    if (expensesCards.length === 0) {
+    if (props.expensesArr.length === 0) {
         return (
             <>
                 <ExpenseFilter onFilterExpense={filteredYear} />
                 <Card className={styles['expenses']}>
-                    <h2 className={styles['expenses__title']}>No expenses found.</h2>
+                    <h2 className={styles['expenses__title']}>You don't have any expenses registered yet! 🤷‍♂️</h2>
+                </Card>
+            </>
+        )
+    } else if (expensesCards.length === 0) {
+        return (
+            <>
+                <ExpenseFilter onFilterExpense={filteredYear} />
+                <Card className={styles['expenses']}>
+                    <h2 className={styles['expenses__title']}>You don't have any expenses registered yet for {selectedYear}! 🤷‍♂️</h2>
                 </Card>
             </>
         )
