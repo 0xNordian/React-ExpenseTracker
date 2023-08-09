@@ -46,6 +46,7 @@
 
 .main-container {
   /* background-color: teal; */
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;

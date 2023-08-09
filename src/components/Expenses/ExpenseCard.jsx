@@ -7,7 +7,7 @@ import { useState } from 'react';
 const ExpenseCard = (props) => {
     const [selectedYear, setSelectedYear] = useState("");
     const [sortOrder, setSortOrder] = useState("asc");
-    const [sortProperty, setSortProperty] = useState('amount'); // Default sorting property
+    const [sortProperty, setSortProperty] = useState(''); // Default sorting property
 
     //! FILTERED YEAR SELECTED BY THE USER
     const filteredYear = (selectedYear) => {
@@ -69,7 +69,9 @@ const ExpenseCard = (props) => {
     if (props.expensesArr.length === 0) {
         return (
             <>
-                <ExpenseFilter onFilterExpense={filteredYear} />
+                <div className={styles['filterAndCard']}>
+                    <ExpenseFilter onFilterExpense={filteredYear} />
+                </div>
                 <Card className={styles['expenses']}>
                     <h2 className={styles['expenses__title']}>You don't have any expenses registered yet! 🤷‍♂️</h2>
                 </Card>
@@ -78,7 +80,9 @@ const ExpenseCard = (props) => {
     } else if (expensesCards.length === 0) {
         return (
             <>
-                <ExpenseFilter onFilterExpense={filteredYear} />
+                <div className={styles['filterAndCard']}>
+                    <ExpenseFilter onFilterExpense={filteredYear} />
+                </div>
                 <Card className={styles['expenses']}>
                     <h2 className={styles['expenses__title']}>You don't have any expenses registered yet for {selectedYear}! 🤷‍♂️</h2>
                 </Card>
@@ -88,7 +92,9 @@ const ExpenseCard = (props) => {
         //! EXPENSE RENDER
         return (
             <>
-                <ExpenseFilter onFilterExpense={filteredYear} />
+                <div className={styles['filterAndCard']}>
+                    <ExpenseFilter onFilterExpense={filteredYear} />
+                </div>
                 <Card className={styles['expenses']}>
                     <div className={styles['order']}>
                         <span>Sort By</span>

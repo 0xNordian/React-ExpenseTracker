@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import styles from './ExpenseForm.module.css';
+import { Button } from "@nextui-org/react";
+import { Input } from "@nextui-org/react";
 
 const ExpenseForm = (props) => {
     const todayDate = new Date();
@@ -79,26 +81,26 @@ const ExpenseForm = (props) => {
     return (
         <form onSubmit={submitHandler}>
             <div className={styles['new-expense__controls']}>
-                <div className={styles['new-expense__control']}>
-                    <label htmlFor='expense-title'>Title</label>
-                    <input
+                <div className='flex w-full flex-wrap md:flex-nowrap gap-4'>
+                    {/* <label htmlFor='expense-title'>Title</label> */}
+                    <Input
+                        label="Title"
                         className={titleError ? styles['title-alert'] : ''}
                         type='text'
                         name='expense-title'
                         id='expense-title'
-                        placeholder='(E.g: Pizza)'
+                        // placeholder='(E.g: Pizza)'
                         value={userInput.enteredTitle}
                         onChange={(e) => inputHandler('title', e.target.value)}
                     />
                     {titleError && <p className={styles['error-message']}>Title must have at least three characters</p>}
                 </div>
-                <div className={styles['new-expense__control']}>
-                    <label htmlFor='expense-date'>Date</label>
-                    <input
+                <div className='flex w-full flex-wrap md:flex-nowrap gap-4'>
+                    <Input
                         type='date'
                         name='expense-date'
                         id='expense-date'
-                        placeholder=''
+                        // placeholder=''
                         min='2020-01-01'
                         max={maxDate}
                         value={userInput.enteredDate || maxDate}
@@ -106,13 +108,12 @@ const ExpenseForm = (props) => {
                     />
                     {isFuture && <p className={styles['error-message']}>Date cannot be in the future.</p>}
                 </div>
-                <div className={styles['new-expense__control']}>
-                    <label htmlFor='expense-amount'>Amount</label>
-                    <input
+                <div className='flex w-full flex-wrap md:flex-nowrap gap-4'>
+                    <Input
+                        label="Amount"
                         type='number'
                         name='expense-amount'
                         id='expense-amount'
-                        placeholder='Amount'
                         min='0.01'
                         step='0.01'
                         value={userInput.enteredAmount}
@@ -121,7 +122,7 @@ const ExpenseForm = (props) => {
                 </div>
             </div>
             <div className={styles['new-expense__actions']}>
-                <button type='submit'>Create</button>
+                <Button type='submit' color="primary">Create</Button>
             </div>
         </form>
     );

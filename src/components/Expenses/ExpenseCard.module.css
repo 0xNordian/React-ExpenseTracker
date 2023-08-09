@@ -28,4 +28,14 @@
 .order .property {
     width: 80px;
     text-align: center;
+    color: #000;
+}
+
+.filterAndCard{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    gap: 5px;
+    color: #fff;
+    padding-right: 1.5rem;
 }
