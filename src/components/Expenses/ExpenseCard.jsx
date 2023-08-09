@@ -25,10 +25,19 @@ const ExpenseCard = (props) => {
         }
     });
 
+    //! DELETE EXPENSE FUNCTION
+    function deleteSelExp(id) {
+        // expensesCards.forEach((item) => props.deleteExp(item.key));
+        props.deleteExp(id);
+    }
+
     //! DYNAMIC EXPENSE CARD GENERATION
-    const ascOrder = (a, b) => a.date - b.date;
-    const dscOrder = (a, b) => b.date - a.date;
-    const expensesCards = filteredExpenses.sort(sortOrder === "asc" ? ascOrder : dscOrder).map((expense) => <ExpenseItem key={expense.id} expense={expense} />);
+    const ascOrder = (a, b) => a.amount - b.amount;
+    const dscOrder = (a, b) => b.amount - a.amount;
+    const expensesCards = filteredExpenses
+        .sort(sortOrder === "asc" ? ascOrder : dscOrder)
+        .map((expense) => <ExpenseItem key={expense.id} expense={expense} deleteExp={deleteSelExp} />);
+
     //! NO EXPENSE FOUND
     if (props.expensesArr.length === 0) {
         return (
@@ -54,18 +63,18 @@ const ExpenseCard = (props) => {
             <>
                 <ExpenseFilter onFilterExpense={filteredYear} />
                 <Card className={styles['expenses']}>
-                <div className={styles['order']}>
-                    <select value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
-                        <option value='dsc'>⬇️</option>
-                        <option value='asc'>⬆️</option>
-                    </select>
-                </div>
+                    <div className={styles['order']}>
+                        <span>Order</span>
+                        <select value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
+                            <option value='dsc'>⬇️</option>
+                            <option value='asc'>⬆️</option>
+                        </select>
+                    </div>
                     {expensesCards}
                 </Card>
             </>
         )
     }
-
 }
 
 export default ExpenseCard;

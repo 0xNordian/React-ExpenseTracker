@@ -8,27 +8,26 @@ const ExpenseItem = (props) => {
     const expenseDate = props.expense.date;
 
     const [title, setTitle] = useState(() => expenseData.title);
-
-    const handleTitleInputChange = (event) => {
-        setTitle(() => {
-            return event.target.value;
-        });
-    }
-
+    // const [isDeleted, setIsDeleted] = useState(false);
     const [isEditing, setIsEditing] = useState(() => {
         return false;
     });
 
+    const handleTitleInputChange = (event) => {
+        setTitle(() => event.target.value);
+    }
+
     const handleTitleChange = () => {
-        setIsEditing(() => {
-            return true;
-        });
+        setIsEditing(() => true);
     }
 
     const handleTitleSave = () => {
-        setIsEditing(() => {
-            return false;
-        });
+        setIsEditing(() => false);
+    }
+
+    const isDeletedHandler = () => {
+        console.log("expenseData.id: ", expenseData.id)
+        props.deleteExp(expenseData.id);
     }
 
     return (
@@ -51,7 +50,10 @@ const ExpenseItem = (props) => {
                     </h2>
                 )}
                 <div className={styles['expense-item__price']}>${expenseData.amount}</div>
-                <button onClick={handleTitleChange}>Change Title</button>
+                <div className={styles['btns']}>
+                    <button onClick={handleTitleChange}>✏️</button>
+                    <button onClick={isDeletedHandler}>🗑️</button>
+                </div>
             </div>
         </Card>
     )
