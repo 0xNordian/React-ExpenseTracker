@@ -8,7 +8,6 @@ const ExpenseItem = (props) => {
     const expenseDate = props.expense.date;
 
     const [title, setTitle] = useState(() => expenseData.title);
-    // const [isDeleted, setIsDeleted] = useState(false);
     const [isEditing, setIsEditing] = useState(() => {
         return false;
     });

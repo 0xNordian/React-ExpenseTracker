@@ -20,7 +20,12 @@
     padding: 0 1.5rem;
 }
 
-.order > select{
+.order .orderSelect{
     width: 50px;
+    text-align: center;
+}
+
+.order .property {
+    width: 80px;
     text-align: center;
 }

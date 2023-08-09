@@ -7,11 +7,11 @@ import { useState } from 'react';
 const ExpenseCard = (props) => {
     const [selectedYear, setSelectedYear] = useState("");
     const [sortOrder, setSortOrder] = useState("asc");
+    const [sortProperty, setSortProperty] = useState('amount'); // Default sorting property
 
     //! FILTERED YEAR SELECTED BY THE USER
     const filteredYear = (selectedYear) => {
         setSelectedYear(selectedYear);
-        // console.log("Selected year from expense card: ", year);
     }
 
     //! EXPENSES FROM APP.jsx FILTERED BY USER SELECTION
@@ -25,18 +25,45 @@ const ExpenseCard = (props) => {
         }
     });
 
+    //! Handle sorting change (both order and property)
+    const handleSortChange = (property, order) => {
+        setSortProperty(property);
+        setSortOrder(order);
+    };
+
     //! DELETE EXPENSE FUNCTION
     function deleteSelExp(id) {
-        // expensesCards.forEach((item) => props.deleteExp(item.key));
         props.deleteExp(id);
     }
 
     //! DYNAMIC EXPENSE CARD GENERATION
-    const ascOrder = (a, b) => a.amount - b.amount;
-    const dscOrder = (a, b) => b.amount - a.amount;
+    //! Determine sorting functions based on sortProperty
+    const ascAmountOrder = (a, b) => a.amount - b.amount;
+    const dscAmountOrder = (a, b) => b.amount - a.amount;
+    const ascDateOrder = (a, b) => a.date - b.date;
+    const dscDateOrder = (a, b) => b.date - a.date;
+    let ascOrder, dscOrder;
+    switch (sortProperty) {
+        case 'amount':
+            ascOrder = ascAmountOrder;
+            dscOrder = dscAmountOrder;
+            break;
+        case 'date':
+            ascOrder = ascDateOrder;
+            dscOrder = dscDateOrder;
+            break;
+        default:
+            ascOrder = ascAmountOrder;
+            dscOrder = dscAmountOrder;
+            break;
+    }
+
     const expensesCards = filteredExpenses
-        .sort(sortOrder === "asc" ? ascOrder : dscOrder)
-        .map((expense) => <ExpenseItem key={expense.id} expense={expense} deleteExp={deleteSelExp} />);
+        .sort(sortOrder === 'asc' ? ascOrder : dscOrder)
+        .map((expense) => (
+            <ExpenseItem key={expense.id} expense={expense} deleteExp={() => deleteSelExp(expense.id)} />
+        ));
+
 
     //! NO EXPENSE FOUND
     if (props.expensesArr.length === 0) {
@@ -64,8 +91,13 @@ const ExpenseCard = (props) => {
                 <ExpenseFilter onFilterExpense={filteredYear} />
                 <Card className={styles['expenses']}>
                     <div className={styles['order']}>
+                        <span>Sort By</span>
+                        <select className={styles['property']} value={sortProperty} onChange={(e) => handleSortChange(sortOrder, e.target.value)}>
+                            <option value='amount'>Amount</option>
+                            <option value='date'>Date</option>
+                        </select>
                         <span>Order</span>
-                        <select value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
+                        <select className={styles['orderSelect']} value={sortOrder} onChange={(e) => handleSortChange(sortProperty, e.target.value)}>
                             <option value='dsc'>⬇️</option>
                             <option value='asc'>⬆️</option>
                         </select>
