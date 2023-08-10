@@ -79,52 +79,55 @@ const ExpenseForm = (props) => {
     }
 
     return (
-        <form onSubmit={submitHandler}>
-            <div className={styles['new-expense__controls']}>
-                <div className='flex w-full flex-wrap md:flex-nowrap gap-4'>
-                    {/* <label htmlFor='expense-title'>Title</label> */}
-                    <Input
-                        label="Title"
-                        className={titleError ? styles['title-alert'] : ''}
-                        type='text'
-                        name='expense-title'
-                        id='expense-title'
-                        // placeholder='(E.g: Pizza)'
-                        value={userInput.enteredTitle}
-                        onChange={(e) => inputHandler('title', e.target.value)}
-                    />
-                    {titleError && <p className={styles['error-message']}>Title must have at least three characters</p>}
+        <section>
+            <h1 className="text-xl mb-4 uppercase text-[#283f3b] font-bold">Expense Tracker</h1>
+            <form onSubmit={submitHandler}>
+                <div className={styles['new-expense__controls']}>
+                    <div className='flex w-full flex-wrap md:flex-nowrap gap-4'>
+                        {/* <label htmlFor='expense-title'>Title</label> */}
+                        <Input
+                            label="Title"
+                            className={titleError ? styles['title-alert'] : ''}
+                            type='text'
+                            name='expense-title'
+                            id='expense-title'
+                            // placeholder='(E.g: Pizza)'
+                            value={userInput.enteredTitle}
+                            onChange={(e) => inputHandler('title', e.target.value)}
+                        />
+                        {titleError && <p className={styles['error-message']}>Title must have at least three characters</p>}
+                    </div>
+                    <div className='flex w-full flex-wrap md:flex-nowrap gap-4'>
+                        <Input
+                            type='date'
+                            name='expense-date'
+                            id='expense-date'
+                            // placeholder=''
+                            min='2020-01-01'
+                            max={maxDate}
+                            value={userInput.enteredDate || maxDate}
+                            onChange={(e) => inputHandler('date', e.target.value)}
+                        />
+                        {isFuture && <p className={styles['error-message']}>Date cannot be in the future.</p>}
+                    </div>
+                    <div className='flex w-full flex-wrap md:flex-nowrap gap-4'>
+                        <Input
+                            label="Amount"
+                            type='number'
+                            name='expense-amount'
+                            id='expense-amount'
+                            min='0.01'
+                            step='0.01'
+                            value={userInput.enteredAmount}
+                            onChange={(e) => inputHandler('amount', e.target.value)}
+                        />
+                    </div>
                 </div>
-                <div className='flex w-full flex-wrap md:flex-nowrap gap-4'>
-                    <Input
-                        type='date'
-                        name='expense-date'
-                        id='expense-date'
-                        // placeholder=''
-                        min='2020-01-01'
-                        max={maxDate}
-                        value={userInput.enteredDate || maxDate}
-                        onChange={(e) => inputHandler('date', e.target.value)}
-                    />
-                    {isFuture && <p className={styles['error-message']}>Date cannot be in the future.</p>}
+                <div className={styles['new-expense__actions']}>
+                    <Button type='submit' color="primary">Create</Button>
                 </div>
-                <div className='flex w-full flex-wrap md:flex-nowrap gap-4'>
-                    <Input
-                        label="Amount"
-                        type='number'
-                        name='expense-amount'
-                        id='expense-amount'
-                        min='0.01'
-                        step='0.01'
-                        value={userInput.enteredAmount}
-                        onChange={(e) => inputHandler('amount', e.target.value)}
-                    />
-                </div>
-            </div>
-            <div className={styles['new-expense__actions']}>
-                <Button type='submit' color="primary">Create</Button>
-            </div>
-        </form>
+            </form>
+        </section>
     );
 };
 

@@ -46,7 +46,9 @@
 
 .main-container {
   /* background-color: teal; */
-  height: 100vh;
+  /* height: 1000px; */
+  min-height: 100vh;
+  max-height: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;

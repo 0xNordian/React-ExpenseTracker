@@ -21,8 +21,8 @@ const ExpenseFilter = (props) => {
             <DropdownTrigger>
             {/* <Tooltip content="Filter year"> */}
                     <Button
-                        className="capitalize"
-                        color="secondary"
+                        className="capitalize text-[#99ddc8] bg-[#283f3b] hover:bg-[#659b5e] hover:text-[#283f3b]"
+                        // color="secondary"
                         variant="solid"
                     >
                         {selectedValue}

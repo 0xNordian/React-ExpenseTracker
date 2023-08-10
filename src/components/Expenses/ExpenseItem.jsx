@@ -48,7 +48,7 @@ const ExpenseItem = (props) => {
                         {title}
                     </h2>
                 )}
-                <div className={styles['expense-item__price']}>${expenseData.amount}</div>
+                <div className={styles['expense-item__price']}>€{expenseData.amount}</div>
                 <div className={styles['btns']}>
                     <button onClick={handleTitleChange}>✏️</button>
                     <button onClick={isDeletedHandler}>🗑️</button>
