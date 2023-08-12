@@ -1,9 +1,9 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@nextui-org/react";
 
 const ExpenseFilter = (props) => {
-    const [selectedKeys, setSelectedKeys] = React.useState(new Set(["All"]));
+    const [selectedKeys, setSelectedKeys] = useState(new Set(["All"]));
     const [isOpen, setIsOpen] = React.useState(false);
 
     const selectedValue = React.useMemo(

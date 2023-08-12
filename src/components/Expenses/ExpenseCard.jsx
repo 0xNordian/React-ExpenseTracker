@@ -7,7 +7,7 @@ import { useState } from 'react';
 const ExpenseCard = (props) => {
     const [selectedYear, setSelectedYear] = useState("");
     const [sortOrder, setSortOrder] = useState("asc");
-    const [sortProperty, setSortProperty] = useState(''); // Default sorting property
+    const [sortProperty, setSortProperty] = useState('amount'); // Default sorting property
 
     //! FILTERED YEAR SELECTED BY THE USER
     const filteredYear = (selectedYear) => {
@@ -38,25 +38,8 @@ const ExpenseCard = (props) => {
 
     //! DYNAMIC EXPENSE CARD GENERATION
     //! Determine sorting functions based on sortProperty
-    const ascAmountOrder = (a, b) => a.amount - b.amount;
-    const dscAmountOrder = (a, b) => b.amount - a.amount;
-    const ascDateOrder = (a, b) => a.date - b.date;
-    const dscDateOrder = (a, b) => b.date - a.date;
-    let ascOrder, dscOrder;
-    switch (sortProperty) {
-        case 'amount':
-            ascOrder = ascAmountOrder;
-            dscOrder = dscAmountOrder;
-            break;
-        case 'date':
-            ascOrder = ascDateOrder;
-            dscOrder = dscDateOrder;
-            break;
-        default:
-            ascOrder = ascAmountOrder;
-            dscOrder = dscAmountOrder;
-            break;
-    }
+    const ascOrder = (a, b) => a[sortProperty] - b[sortProperty];
+    const dscOrder = (a, b) => b[sortProperty] - a[sortProperty];
 
     const expensesCards = filteredExpenses
         .sort(sortOrder === 'asc' ? ascOrder : dscOrder)
@@ -98,7 +81,7 @@ const ExpenseCard = (props) => {
                 <Card className={styles['expenses']}>
                     <div className={styles['order']}>
                         <span>Sort By</span>
-                        <select className={styles['property']} value={sortProperty} onChange={(e) => handleSortChange(sortOrder, e.target.value)}>
+                        <select className={styles['property']} value={sortProperty} onChange={(e) => handleSortChange(e.target.value, sortOrder)}>
                             <option value='amount'>Amount</option>
                             <option value='date'>Date</option>
                         </select>
