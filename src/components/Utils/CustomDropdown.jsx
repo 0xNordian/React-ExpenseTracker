@@ -7,7 +7,7 @@ const CustomDropdown = ({ items, selectedValue, onAction, className, label }) =>
         <Dropdown>
             <DropdownTrigger>
                 <Button
-                    className={`${className} text-lg`}
+                    className={`${className} text-md min-w-[50px] h-[35px]`}
                     variant="solid"
                 >
                     {label ? label : selectedValue}
