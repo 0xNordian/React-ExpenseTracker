@@ -16,7 +16,11 @@ export default {
     './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}'
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        secondary: '#283F3B',
+      }
+    },
   },
   darkMode: "class",
   plugins: [nextui()],

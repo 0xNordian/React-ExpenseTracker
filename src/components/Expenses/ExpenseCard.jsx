@@ -2,7 +2,9 @@ import ExpenseItem from './ExpenseItem';
 import styles from './ExpenseCard.module.css'
 import Card from '../UI/Card'
 import ExpenseFilter from './ExpenseFilter'
+import CustomDropdown from '../Utils/CustomDropdown';
 import { useState } from 'react';
+import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@nextui-org/react";
 
 const ExpenseCard = (props) => {
     const [selectedYear, setSelectedYear] = useState("");
@@ -78,18 +80,34 @@ const ExpenseCard = (props) => {
                 <div className={styles['filterAndCard']}>
                     <ExpenseFilter onFilterExpense={filteredYear} />
                 </div>
+
                 <Card className={styles['expenses']}>
                     <div className={styles['order']}>
-                        <span>Sort By</span>
-                        <select className={styles['property']} value={sortProperty} onChange={(e) => handleSortChange(e.target.value, sortOrder)}>
-                            <option value='amount'>Amount</option>
-                            <option value='date'>Date</option>
-                        </select>
-                        <span>Order</span>
-                        <select className={styles['orderSelect']} value={sortOrder} onChange={(e) => handleSortChange(sortProperty, e.target.value)}>
-                            <option value='dsc'>⬇️</option>
-                            <option value='asc'>⬆️</option>
-                        </select>
+                        <div className={`${styles['sort']}`}>
+                            <span>Sort By</span>
+                            <CustomDropdown
+                                items={[
+                                    { value: 'amount', label: 'Amount' },
+                                    { value: 'date', label: 'Date' }
+                                ]}
+                                selectedValue={sortProperty}
+                                onAction={(selectedKey) => handleSortChange(selectedKey, sortOrder)}
+                                className="capitalize text-[#99ddc8] bg-[#283f3b] hover:bg-[#659b5e] hover:text-[#283f3b]"
+                            />
+                        </div>
+                        <div className={styles['sort']}>
+                            <span>Order</span>
+                            <CustomDropdown
+                                items={[
+                                    { value: 'asc', label: '⬆️' },
+                                    { value: 'dsc', label: '⬇️' }
+                                ]}
+                                selectedValue={sortOrder}
+                                onAction={(selectedKey) => handleSortChange(sortProperty, selectedKey)}
+                                className="capitalize text-[#99ddc8] bg-[#283f3b] hover:bg-[#659b5e] hover:text-[#283f3b]"
+                                label={sortOrder === 'asc' ? '⬆️' : '⬇️'}
+                            />
+                        </div>
                     </div>
                     {expensesCards}
                 </Card>
