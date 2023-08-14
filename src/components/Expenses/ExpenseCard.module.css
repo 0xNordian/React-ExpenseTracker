@@ -18,7 +18,7 @@
     align-items: center;
     gap: 1rem;
     color: white;
-    padding: 0 1.5rem;
+    /* padding: 0 1.5rem; */
     /* border: 2px solid #fff; */
 }
 
@@ -42,9 +42,10 @@
 
 .filterAndCard{
     display: flex;
-    justify-content: end;
+    justify-content: flex-start;
     align-items: center;
     gap: 5px;
     color: #fff;
-    padding-right: 1.5rem;
+    padding: 0rem 1.5rem;
+    /* border: 2px solid #fff; */
 }
