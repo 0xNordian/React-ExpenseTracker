@@ -1,26 +1,47 @@
 .new-expense {
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
+    align-items: center;
     flex-wrap: wrap;
     background-color: #283F3B;
     padding: 1rem;
     margin: 2rem auto;
     width: 50rem;
     max-width: 95%;
-    border-radius: 12px;
+    /* border-radius: 12px; */
     text-align: center;
     box-shadow: 0 1px 8px rgba(0, 0, 0, 0.25);
 }
 
+.expense-item__total {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #99ddc8;
+    background-color: #283f3b;
+    border: 1px solid #99ddc8;
+    padding: 0.5rem;
+    border-radius: 12px;
+    margin-top: 6px;
+    min-width: 110px;
+}
+
+.new-expense h2{
+    color: #fff;
+}
+
 .new-expense button {
+    width: 40px;
+    height: 40px;
     font: inherit;
     cursor: pointer;
-    padding: 1rem 2rem;
+    /* padding: 1rem 2rem; */
+    padding: 0;
     border: 1px solid #556f44;
     background-color: #283f3b;
     color: white;
-    border-radius: 12px;
-    margin-right: 1rem;
+    box-sizing: border-box;
+    border-radius: 50%;
+    /* margin-right: 1rem; */
 }
 
 .new-expense button:hover,
