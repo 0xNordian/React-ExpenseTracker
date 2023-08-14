@@ -23,10 +23,11 @@
     border-radius: 12px;
     margin-top: 6px;
     min-width: 110px;
+    font-size: larger;
 }
 
 .new-expense h2{
-    color: #fff;
+    color: #99ddc8;
 }
 
 .new-expense button {

@@ -19,7 +19,8 @@ const App = () => {
 
   return (
     <div className={styles['main-container']}>
-      <div className={styles['container']}>
+      <h1 className="text-[#99ddc8] text-[2rem]">My Expense Tracker 🫰</h1>
+      <div className={`${styles['container']}`}>
         <NewExpense expensesArr={expenses} addExpenseHandler={addExpenseHandler} />
         <ExpenseCard expensesArr={expenses} deleteExp={deleteExpenseHandler} />
       </div>

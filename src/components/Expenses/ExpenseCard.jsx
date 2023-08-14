@@ -77,8 +77,8 @@ const ExpenseCard = (props) => {
         //! EXPENSE RENDER
         return (
             <>
-                <Card className={styles['expenses']}>
-                    <div className={styles['filterAndCard']}>
+                <Card className={`${styles['expenses']} p-10`}>
+                    <div className={`${styles.filterAndCard} ${styles.glass}`}>
                         <div className={`${styles['sort']}`}>
                             <span>Year</span>
                             <ExpenseFilter onFilterExpense={filteredYear} />

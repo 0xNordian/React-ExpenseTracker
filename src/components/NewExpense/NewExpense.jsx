@@ -36,11 +36,11 @@ const NewExpense = (props) => {
         <div className={styles['new-expense']}>
             <div>
                 <h2># Expenses</h2>
-                <p className={styles['expense-item__total']}>{numExp}</p>
+                <p className={`${styles['expense-item__total']}`}>{numExp}</p>
             </div>
             <div>
                 <h2>Total Expenses</h2>
-                <p className={styles['expense-item__total']}>{totalExp}</p>
+                <p className={`${styles['expense-item__total']}`}>{totalExp}</p>
             </div>
             <Card
                 isBlurred
