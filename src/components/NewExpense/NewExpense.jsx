@@ -5,14 +5,16 @@ import styles from './NewExpense.module.css'
 import { Card, CardFooter, Image, Button, Progress, Input, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from "@nextui-org/react";
 
 const NewExpense = (props) => {
+    const [currentId, setCurrentId] = useState(1);
     const saveExpenseLiftUp = (enteredExpenseData) => {
         const expenseData = {
             ...enteredExpenseData
         };
         props.addExpenseHandler(expenseData);
+        setCurrentId(prev => prev + 1);
     };
 
-    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const { isOpen, onOpenChange } = useDisclosure();
     const closeModal = () => onOpenChange(false);
     const openModal = () => onOpenChange(true);
 
@@ -25,12 +27,12 @@ const NewExpense = (props) => {
             >
                 <CustomModal 
                     isOpen={isOpen} 
-                    closeModal={closeModal} 
                     openModal={openModal} 
                     modalBody={
                         <ExpenseForm 
                             onSavedExpenseData={saveExpenseLiftUp} 
-                            closeModal={closeModal}/>}/>
+                            closeModal={closeModal}
+                            currentId={currentId}/>}/>
             </Card>
         </div>
     )

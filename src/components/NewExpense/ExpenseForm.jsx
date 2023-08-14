@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import styles from './ExpenseForm.module.css';
 import CustomModal from '../Utils/CustomModal';
 import { Input, Button, Checkbox } from "@nextui-org/react";
 import btnAction from '../Styles/btnAction';
 
 const ExpenseForm = (props) => {
+    // console.log("ExpenseForm rendered"); Check if the component get rendered every time I open the modal
     const todayDate = new Date();
     const maxDate = formatDate(todayDate); // Format today's date with leading zero
     const [titleError, setTitleError] = useState(false);
     const [id, setId] = useState([1])
     const [isFuture, setIsFuture] = useState(false);
     const [isMultipleExp, setIsMultipleExp] = useState(false);
-    // const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    // console.log("onFormSubmit: ", props.onFormSubmit)
+    const idRef = useRef(0);
 
     //! USER INPUT STATE
     const [userInput, setUserInput] = useState(() => {
@@ -25,11 +25,11 @@ const ExpenseForm = (props) => {
     });
 
     //! INPUT HANDLER FUNCTION
-    const inputHandler = (id, value) => {
-        switch (id) {
+    const inputHandler = (label, value) => {
+        switch (label) {
             case 'title':
                 setUserInput((prevState) => ({ ...prevState, enteredTitle: value }));
-                setTitleError(value.length < 3); // Set titleError to true if the title length is less than 3
+                setTitleError(value.length < 3);
                 break;
             case 'date':
                 setUserInput((prevState) => ({ ...prevState, enteredDate: value }));
@@ -47,13 +47,13 @@ const ExpenseForm = (props) => {
     const submitHandler = (e) => {
         e.preventDefault();
 
-        setId((prevId) => [...prevId, prevId.length + 1])
+        //? setId((prevId) => [...prevId, prevId.length + 1]) <-- Works outside the modal
         const newExpenseDate = new Date(userInput.enteredDate)
         const expenseData = {
-            id: `e${id[id.length - 1]}`,
+            // id: `e${id[id.length - 1]}`, //?Works outside the modal
+            id: `e${props.currentId}`,
             title: userInput.enteredTitle,
             amount: userInput.enteredAmount,
-            // date: newExpenseDate.toLocaleDateString()
             date: newExpenseDate
         };
         console.log("expenseData: ", expenseData)
@@ -149,8 +149,8 @@ const ExpenseForm = (props) => {
                             className={btnAction.regulatActionBtn}
                         >
                             Create
-                        </Button> 
-                    :
+                        </Button>
+                        :
                         <Button
                             onClick={props.closeModal}
                             type='submit'
