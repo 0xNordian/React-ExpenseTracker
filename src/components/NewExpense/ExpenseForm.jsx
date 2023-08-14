@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import styles from './ExpenseForm.module.css';
-import { Button } from "@nextui-org/react";
-import { Input } from "@nextui-org/react";
+import CustomModal from '../Utils/CustomModal';
+import { Input, Button, Checkbox } from "@nextui-org/react";
+import btnAction from '../Styles/btnAction';
 
 const ExpenseForm = (props) => {
     const todayDate = new Date();
@@ -9,6 +10,9 @@ const ExpenseForm = (props) => {
     const [titleError, setTitleError] = useState(false);
     const [id, setId] = useState([1])
     const [isFuture, setIsFuture] = useState(false);
+    const [isMultipleExp, setIsMultipleExp] = useState(false);
+    // const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    // console.log("onFormSubmit: ", props.onFormSubmit)
 
     //! USER INPUT STATE
     const [userInput, setUserInput] = useState(() => {
@@ -78,9 +82,12 @@ const ExpenseForm = (props) => {
         // return `${formattedDay}-${formattedMonth}-${year}`;
     }
 
+    //!Manage Multiple Expenses Seletor
+    const multipleExpHandler = () => setIsMultipleExp(prevState => !prevState);
+
     return (
         <section>
-            <h1 className="text-xl mb-4 uppercase text-[#283f3b] font-bold">Expense Tracker</h1>
+            {/* <h1 className="text-xl mb-4 uppercase text-[#283f3b] font-bold">Expense Tracker</h1> */}
             <form onSubmit={submitHandler}>
                 <div className={styles['new-expense__controls']}>
                     <div className='flex w-full flex-wrap md:flex-nowrap gap-4'>
@@ -123,8 +130,35 @@ const ExpenseForm = (props) => {
                         />
                     </div>
                 </div>
-                <div className={styles['new-expense__actions']}>
-                    <Button type='submit' color="primary" className="rounded-2xl border-2 border-dashed border-black bg-white px-6 py-3 font-semibold uppercase text-black transition-all duration-300 hover:translate-x-[-4px] hover:translate-y-[-4px] hover:rounded-md hover:shadow-[4px_4px_0px_black] active:translate-x-[0px] active:translate-y-[0px] active:rounded-2xl active:shadow-none">Create</Button>
+                <div className="flex gap-4 mb-6">
+                    <Checkbox onChange={multipleExpHandler} radius="lg">Create multiple expenses</Checkbox>
+                </div>
+
+                <div className={`${styles['new-expense__actions']} flex justify-end gap-3 `}>
+                    <Button
+                        onClick={props.closeModal}
+                        className={btnAction.dangerActionBtn}>
+
+                        Cancel
+                    </Button>
+
+                    {isMultipleExp ?
+                        <Button
+                            type='submit'
+                            color="primary"
+                            className={btnAction.regulatActionBtn}
+                        >
+                            Create
+                        </Button> 
+                    :
+                        <Button
+                            onClick={props.closeModal}
+                            type='submit'
+                            color="primary"
+                            className={btnAction.regulatActionBtn}
+                        >
+                            Create
+                        </Button>}
                 </div>
             </form>
         </section>
