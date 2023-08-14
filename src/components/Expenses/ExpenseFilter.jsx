@@ -3,7 +3,8 @@ import React, { useState } from "react";
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@nextui-org/react";
 
 const ExpenseFilter = (props) => {
-    const [selectedKeys, setSelectedKeys] = useState(new Set(["All"]));
+    const initialSet = props.initialYear ? new Set([props.initialYear]) : new Set(["All"]);
+    const [selectedKeys, setSelectedKeys] = useState(initialSet);
     const [isOpen, setIsOpen] = React.useState(false);
 
     const selectedValue = React.useMemo(

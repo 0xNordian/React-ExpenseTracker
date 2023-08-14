@@ -64,10 +64,11 @@ const ExpenseCard = (props) => {
     } else if (expensesCards.length === 0) {
         return (
             <>
-                <div className={styles['filterAndCard']}>
-                    <ExpenseFilter onFilterExpense={filteredYear} />
-                </div>
-                <Card className={styles['expenses']}>
+                <Card className={`${styles['expenses']} pl-6`}>
+                    <div className={`${styles['filterAndCard']} flex justify-start mb-4 p-0`}>
+                        <span>Year</span>
+                        <ExpenseFilter onFilterExpense={filteredYear} initialYear={selectedYear} />
+                    </div>
                     <h2 className={styles['expenses__title']}>You don't have any expenses registered yet for {selectedYear}! 🤷‍♂️</h2>
                 </Card>
             </>
