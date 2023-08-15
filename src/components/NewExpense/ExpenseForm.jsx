@@ -21,7 +21,8 @@ const ExpenseForm = (props) => {
             id: '',
             enteredTitle: '',
             enteredDate: maxDate,
-            enteredAmount: ''
+            enteredAmount: '',
+            enteredCategory: ''
         };
     });
 
@@ -39,6 +40,9 @@ const ExpenseForm = (props) => {
             case 'amount':
                 setUserInput((prevState) => ({ ...prevState, enteredAmount: value }));
                 break;
+            case 'category':
+                setUserInput((prevState) => ({ ...prevState, enteredCategory: value }));
+                break;
             default:
                 break;
         }
@@ -50,12 +54,14 @@ const ExpenseForm = (props) => {
 
         //? setId((prevId) => [...prevId, prevId.length + 1]) <-- Works outside the modal
         const newExpenseDate = new Date(userInput.enteredDate)
+        const newCategory = selectedCategory
         const expenseData = {
             // id: `e${id[id.length - 1]}`, //?Works outside the modal
             id: `e${props.currentId}`,
             title: userInput.enteredTitle,
             amount: userInput.enteredAmount,
-            date: newExpenseDate
+            date: newExpenseDate,
+            category: newCategory
         };
         console.log("expenseData: ", expenseData)
         //* LIFT SUBMITTED DATA
@@ -67,6 +73,7 @@ const ExpenseForm = (props) => {
             enteredTitle: "",
             enteredDate: maxDate,
             enteredAmount: "",
+            enteredCategory: ""
         });
     };
 
