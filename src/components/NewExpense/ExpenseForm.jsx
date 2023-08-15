@@ -106,7 +106,7 @@ const ExpenseForm = (props) => {
         const selectedValue = expCategories[selectedItem]; // Get the corresponding value from expCategories
         setSelectedCategory(selectedItem);
         setSelectedCategDisplay(selectedValue);
-    }; 
+    };
     // console.log("selectedCategDisplay: ", selectedCategDisplay)
     // console.log("selectedCategory: ", selectedCategory)
 
@@ -154,15 +154,18 @@ const ExpenseForm = (props) => {
                             onChange={(e) => inputHandler('amount', e.target.value)}
                         />
                     </div>
-                    <CustomDropdown
-                        items={Object.entries(expCategories).map(([key, value]) => ({
-                            value: key,      // Corrected this line
-                            label: value 
-                        }))}
-                        selectedValue={selectedCategory}
-                        label={selectedCategDisplay || "Select Category"}
-                        onAction={(e) => handleCategoryChange(e)} // Change this line
-                    />
+                    <div className='flex justify-center items-center gap-2 '>
+                        {selectedCategDisplay && <span>Category</span>}
+                        <CustomDropdown
+                            items={Object.entries(expCategories).map(([key, value]) => ({
+                                value: key,      // Corrected this line
+                                label: value
+                            }))}
+                            selectedValue={selectedCategory}
+                            label={selectedCategDisplay || "Select Category"}
+                            onAction={(e) => handleCategoryChange(e)} // Change this line
+                        />
+                    </div>
                 </div>
                 <div className="w-[100px]">
                 </div>
