@@ -2,6 +2,7 @@ import styles from './ExpenseItem.module.css'
 import ExpenseDate from './ExpenseDate'
 import Card from '../UI/Card'
 import { useState } from 'react';
+import { Chip } from "@nextui-org/react";
 
 const ExpenseItem = (props) => {
     const expenseData = props.expense;
@@ -48,6 +49,7 @@ const ExpenseItem = (props) => {
                         {title}
                     </h2>
                 )}
+                <Chip className="text-white" color="success" variant="dot">{expenseData.category}</Chip>
                 <div className={styles['expense-item__price']}>€{expenseData.amount}</div>
                 <div className={styles['btns']}>
                     <button onClick={handleTitleChange}>✏️</button>

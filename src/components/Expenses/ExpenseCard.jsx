@@ -66,9 +66,6 @@ const ExpenseCard = (props) => {
     if (props.expensesArr.length === 0) {
         return (
             <>
-                {/* <div className={styles['filterAndCard']}>
-                    <ExpenseFilter onFilterExpense={filteredYear} />
-                </div> */}
                 <NewExpense expensesArr={props.expensesArr} addExpenseHandler={props.addExpenseHandler} numExp={numExp} totalExp={totalExp} />
                 <Card className={styles['expenses']}>
                     <h2 className={styles['expenses__title']}>You don't have any expenses registered yet! 🤷‍♂️</h2>

@@ -6,7 +6,6 @@ import CustomDropdown from '../Utils/CustomDropdown';
 
 
 const ExpenseForm = (props) => {
-    // console.log("ExpenseForm rendered"); Check if the component get rendered every time I open the modal
     const todayDate = new Date();
     const maxDate = formatDate(todayDate); // Format today's date with leading zero
     const [titleError, setTitleError] = useState(false);
@@ -103,7 +102,9 @@ const ExpenseForm = (props) => {
         carPurchase: "Car Purchase",
         carGas: "Car gas",
         carRentParking: "Rent car parking",
-        carOcasionalParking: "Ocasional car parking"
+        carOcasionalParking: "Ocasional car parking",
+        groseryFood: "Grosery food",
+        leisureFood: "Restaurant"
     };
 
     const [selectedCategory, setSelectedCategory] = useState(() => "");
@@ -114,8 +115,6 @@ const ExpenseForm = (props) => {
         setSelectedCategory(selectedItem);
         setSelectedCategDisplay(selectedValue);
     };
-    // console.log("selectedCategDisplay: ", selectedCategDisplay)
-    // console.log("selectedCategory: ", selectedCategory)
 
     return (
         <section>
@@ -141,7 +140,6 @@ const ExpenseForm = (props) => {
                             type='date'
                             name='expense-date'
                             id='expense-date'
-                            // placeholder=''
                             min='2020-01-01'
                             max={maxDate}
                             value={userInput.enteredDate || maxDate}

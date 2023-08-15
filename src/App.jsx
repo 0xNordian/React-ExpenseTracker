@@ -1,7 +1,6 @@
 import { useState } from "react";
 import ExpenseCard from "./components/Expenses/ExpenseCard";
 import styles from './App.module.css'
-import ExpenseCategories from "./components/Categories/ExpenseCategories";
 
 const App = () => {
   const [expenses, setExpenses] = useState(() => []);
@@ -19,8 +18,6 @@ const App = () => {
     <div className={styles['main-container']}>
       <h1 className="text-[#99ddc8] text-[2rem]">My Expense Tracker 🫰</h1>
       <div className={`${styles['container']}`}>
-        {/* <NewExpense expensesArr={expenses} addExpenseHandler={addExpenseHandler} /> */}
-        <ExpenseCategories />
         <ExpenseCard expensesArr={expenses} deleteExp={deleteExpenseHandler} addExpenseHandler={addExpenseHandler}/>
       </div>
     </div>
