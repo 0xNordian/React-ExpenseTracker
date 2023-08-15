@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import styles from './ExpenseForm.module.css';
+import styles from './expenseForm.module.css';
 import { Input, Button, Checkbox } from "@nextui-org/react";
 import btnAction from '../Styles/btnAction';
 import CustomDropdown from '../Utils/CustomDropdown';
