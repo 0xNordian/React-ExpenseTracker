@@ -1,8 +1,9 @@
 import React, { useState, useRef } from 'react';
 import styles from './ExpenseForm.module.css';
-import CustomModal from '../Utils/CustomModal';
 import { Input, Button, Checkbox } from "@nextui-org/react";
 import btnAction from '../Styles/btnAction';
+import CustomDropdown from '../Utils/CustomDropdown';
+
 
 const ExpenseForm = (props) => {
     // console.log("ExpenseForm rendered"); Check if the component get rendered every time I open the modal
@@ -85,6 +86,30 @@ const ExpenseForm = (props) => {
     //!Manage Multiple Expenses Seletor
     const multipleExpHandler = () => setIsMultipleExp(prevState => !prevState);
 
+    const expCategories = {
+        rent: "Rent",
+        mortage: "Mortage",
+        electricity: "Electricity",
+        waterSupply: "Water",
+        communicationPlan: "Internet and Communication Plan",
+        carLoan: "Car loan",
+        carPurchase: "Car Purchase",
+        carGas: "Car gas",
+        carRentParking: "Rent car parking",
+        carOcasionalParking: "Ocasional car parking"
+    };
+
+    const [selectedCategory, setSelectedCategory] = useState(() => "");
+    const [selectedCategDisplay, setSelectedCategDisplay] = useState(() => "")
+
+    const handleCategoryChange = (selectedItem) => {
+        const selectedValue = expCategories[selectedItem]; // Get the corresponding value from expCategories
+        setSelectedCategory(selectedItem);
+        setSelectedCategDisplay(selectedValue);
+    }; 
+    // console.log("selectedCategDisplay: ", selectedCategDisplay)
+    // console.log("selectedCategory: ", selectedCategory)
+
     return (
         <section>
             {/* <h1 className="text-xl mb-4 uppercase text-[#283f3b] font-bold">Expense Tracker</h1> */}
@@ -129,6 +154,17 @@ const ExpenseForm = (props) => {
                             onChange={(e) => inputHandler('amount', e.target.value)}
                         />
                     </div>
+                    <CustomDropdown
+                        items={Object.entries(expCategories).map(([key, value]) => ({
+                            value: key,      // Corrected this line
+                            label: value 
+                        }))}
+                        selectedValue={selectedCategory}
+                        label={selectedCategDisplay || "Select Category"}
+                        onAction={(e) => handleCategoryChange(e)} // Change this line
+                    />
+                </div>
+                <div className="w-[100px]">
                 </div>
                 <div className="flex gap-4 mb-6">
                     <Checkbox onChange={multipleExpHandler} radius="lg">Create multiple expenses</Checkbox>
