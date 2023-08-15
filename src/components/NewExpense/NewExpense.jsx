@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import ExpenseForm from './ExpenseForm'
 import CustomModal from '../Utils/CustomModal';
-import styles from './NewExpense.module.css'
+import styles from './newExpense.module.css'
 import { Card, CardFooter, Image, Button, Progress, Input, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from "@nextui-org/react";
 
 const NewExpense = (props) => {
