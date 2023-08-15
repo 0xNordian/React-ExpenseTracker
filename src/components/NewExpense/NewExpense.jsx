@@ -5,10 +5,8 @@ import styles from './NewExpense.module.css'
 import { Card, CardFooter, Image, Button, Progress, Input, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from "@nextui-org/react";
 
 const NewExpense = (props) => {
-    const arr = props.expensesArr;
+    console.log("props.totalExp: ", props.totalExp)
     const [currentId, setCurrentId] = useState(1);
-    const [numExp, setNumExp] = useState(() => 0)
-    const [totalExp, setTotalExp] = useState(0);
     const saveExpenseLiftUp = (enteredExpenseData) => {
         const expenseData = {
             ...enteredExpenseData
@@ -16,17 +14,6 @@ const NewExpense = (props) => {
         props.addExpenseHandler(expenseData);
         setCurrentId(prev => prev + 1);
     };
-
-    useEffect(() => {
-        setNumExp(props.expensesArr.length);
-        totalExpHandler();
-    }, [props.expensesArr]);
-
-    const totalExpHandler = () => {
-        const total = arr.reduce((acc, item) => acc + Number(item.amount), 0);
-        setTotalExp(total);
-    }
-    console.log("TotalExp: ", totalExp)
 
     const { isOpen, onOpenChange } = useDisclosure();
     const closeModal = () => onOpenChange(false);
@@ -36,11 +23,11 @@ const NewExpense = (props) => {
         <div className={styles['new-expense']}>
             <div>
                 <h2># Expenses</h2>
-                <p className={`${styles['expense-item__total']} ${styles.glass}`}>{numExp}</p>
+                <p className={`${styles['expense-item__total']} ${styles.glass}`}>{props.numExp}</p>
             </div>
             <div>
                 <h2>Total Expenses</h2>
-                <p className={`${styles['expense-item__total']} ${styles.glass}`}>{totalExp}</p>
+                <p className={`${styles['expense-item__total']} ${styles.glass}`}>{props.totalExp}</p>
             </div>
             <Card
                 isBlurred

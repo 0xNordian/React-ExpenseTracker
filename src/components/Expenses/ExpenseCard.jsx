@@ -3,7 +3,8 @@ import styles from './ExpenseCard.module.css'
 import Card from '../UI/Card'
 import ExpenseFilter from './ExpenseFilter'
 import CustomDropdown from '../Utils/CustomDropdown';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import NewExpense from '../NewExpense/NewExpense';
 
 const ExpenseCard = (props) => {
     const [selectedYear, setSelectedYear] = useState("");
@@ -48,6 +49,18 @@ const ExpenseCard = (props) => {
             <ExpenseItem key={expense.id} expense={expense} deleteExp={() => deleteSelExp(expense.id)} />
         ));
 
+    const [numExp, setNumExp] = useState(() => 0)
+    const [totalExp, setTotalExp] = useState(0);
+
+    useEffect(() => {
+        setNumExp(filteredExpenses.length);
+        totalExpHandler();
+    }, [filteredExpenses]);
+
+    const totalExpHandler = () => {
+        const total = filteredExpenses.reduce((acc, item) => acc + Number(item.amount), 0);
+        setTotalExp(total);
+    }
 
     //! NO EXPENSE FOUND
     if (props.expensesArr.length === 0) {
@@ -56,6 +69,7 @@ const ExpenseCard = (props) => {
                 {/* <div className={styles['filterAndCard']}>
                     <ExpenseFilter onFilterExpense={filteredYear} />
                 </div> */}
+                <NewExpense expensesArr={props.expensesArr} addExpenseHandler={props.addExpenseHandler} numExp={numExp} totalExp={totalExp} />
                 <Card className={styles['expenses']}>
                     <h2 className={styles['expenses__title']}>You don't have any expenses registered yet! 🤷‍♂️</h2>
                 </Card>
@@ -64,6 +78,7 @@ const ExpenseCard = (props) => {
     } else if (expensesCards.length === 0) {
         return (
             <>
+                <NewExpense expensesArr={props.expensesArr} addExpenseHandler={props.addExpenseHandler} numExp={numExp} totalExp={totalExp} />
                 <Card className={`${styles['expenses']} pl-6`}>
                     <div className={`${styles['filterAndCard']} flex justify-start mb-4 p-0`}>
                         <span>Year</span>
@@ -77,6 +92,7 @@ const ExpenseCard = (props) => {
         //! EXPENSE RENDER
         return (
             <>
+                <NewExpense expensesArr={props.expensesArr} addExpenseHandler={props.addExpenseHandler} numExp={numExp} totalExp={totalExp} />
                 <Card className={`${styles['expenses']} p-10`}>
                     <div className={`${styles.filterAndCard} ${styles.glass}`}>
                         <div className={`${styles['sort']}`}>
