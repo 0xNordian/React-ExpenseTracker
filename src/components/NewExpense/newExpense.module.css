@@ -61,3 +61,16 @@
 .new-expense button.alternative:active {
     background-color: #659b5e;
 }
+
+.glass {
+    background: rgba(255, 255, 255, 0.18);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(9.6px);
+    -webkit-backdrop-filter: blur(9.6px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.glass2{
+    background-color: pink;
+}

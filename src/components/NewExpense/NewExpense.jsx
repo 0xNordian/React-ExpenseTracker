@@ -36,15 +36,15 @@ const NewExpense = (props) => {
         <div className={styles['new-expense']}>
             <div>
                 <h2># Expenses</h2>
-                <p className={`${styles['expense-item__total']}`}>{numExp}</p>
+                <p className={`${styles['expense-item__total']} ${styles.glass}`}>{numExp}</p>
             </div>
             <div>
                 <h2>Total Expenses</h2>
-                <p className={`${styles['expense-item__total']}`}>{totalExp}</p>
+                <p className={`${styles['expense-item__total']} ${styles.glass}`}>{totalExp}</p>
             </div>
             <Card
                 isBlurred
-                className="border-none bg-background/60 dark:bg-default-100/50 max-w-[610px] p-2"
+                className="border-none bg-background/25 dark:bg-default-100/50 max-w-[610px] p-2 text-2xl"
                 shadow="sm"
             >
                 <CustomModal
