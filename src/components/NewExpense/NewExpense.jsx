@@ -27,7 +27,7 @@ const NewExpense = (props) => {
             </div>
             <div>
                 <h2>Total Expenses</h2>
-                <p className={`${styles['expense-item__total']} ${styles.glass}`}>{props.totalExp}</p>
+                <p className={`${styles['expense-item__total']} ${styles.glass}`}>€ {parseFloat(props.totalExp).toLocaleString('en-EN')}</p>
             </div>
             <Card
                 isBlurred

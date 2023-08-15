@@ -44,8 +44,8 @@
     border: 2px solid red; /* Change the border width to 2px */
 }
 
-.error-message{
-    color: white;
-    font-size: smaller;
-    margin: .1rem .2rem;
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
 }

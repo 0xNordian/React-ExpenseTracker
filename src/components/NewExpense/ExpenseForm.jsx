@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styles from './ExpenseForm.module.css';
 import { Input, Button, Checkbox } from "@nextui-org/react";
 import btnAction from '../Styles/btnAction';
@@ -9,9 +9,12 @@ const ExpenseForm = (props) => {
     const todayDate = new Date();
     const maxDate = formatDate(todayDate); // Format today's date with leading zero
     const [titleError, setTitleError] = useState(false);
+    const [amountError, setAmountError] = useState(false);
+    const [categoryError, setCategoryError] = useState(false);
     const [id, setId] = useState([1])
     const [isFuture, setIsFuture] = useState(false);
     const [isMultipleExp, setIsMultipleExp] = useState(false);
+    const [formError, setFormError] = useState(false);
     const idRef = useRef(0);
 
     //! USER INPUT STATE
@@ -50,30 +53,41 @@ const ExpenseForm = (props) => {
     //! SUBMIT FORM FUNCTION
     const submitHandler = (e) => {
         e.preventDefault();
+        console.log("Submitting form...");
 
-        //? setId((prevId) => [...prevId, prevId.length + 1]) <-- Works outside the modal
-        const newExpenseDate = new Date(userInput.enteredDate)
-        const newCategory = selectedCategory
-        const expenseData = {
-            // id: `e${id[id.length - 1]}`, //?Works outside the modal
-            id: `e${props.currentId}`,
-            title: userInput.enteredTitle,
-            amount: userInput.enteredAmount,
-            date: newExpenseDate,
-            category: newCategory
-        };
-        console.log("expenseData: ", expenseData)
-        //* LIFT SUBMITTED DATA
-        props.onSavedExpenseData(expenseData);
+        const hasErrors = errorHandler();
 
-        //* RESTART FORM
-        setUserInput({
-            id: "",
-            enteredTitle: "",
-            enteredDate: maxDate,
-            enteredAmount: "",
-            enteredCategory: ""
-        });
+        if (!hasErrors) {
+            //? setId((prevId) => [...prevId, prevId.length + 1]) <-- Works outside the modal
+            const newExpenseDate = new Date(userInput.enteredDate)
+            const expenseData = {
+                // id: `e${id[id.length - 1]}`, //?Works outside the modal
+                id: `e${props.currentId}`,
+                title: userInput.enteredTitle,
+                amount: userInput.enteredAmount,
+                date: newExpenseDate,
+                displayCategory: selectedCategDisplay,
+                backEndCategory: selectedCategory
+            };
+            console.log("expenseData: ", expenseData)
+            //* LIFT SUBMITTED DATA
+            props.onSavedExpenseData(expenseData);
+
+            setFormError(false);
+
+            //* RESTART FORM
+            setUserInput({
+                id: "",
+                enteredTitle: "",
+                enteredDate: maxDate,
+                enteredAmount: "",
+                enteredCategory: ""
+            });
+
+            // Reset the category fields
+            setSelectedCategory("");
+            setSelectedCategDisplay("");
+        }
     };
 
     //! DATE FORMAT FUNCTION
@@ -114,6 +128,46 @@ const ExpenseForm = (props) => {
         const selectedValue = expCategories[selectedItem]; // Get the corresponding value from expCategories
         setSelectedCategory(selectedItem);
         setSelectedCategDisplay(selectedValue);
+        console.log('Category Error:', categoryError); // Add this line
+    };
+
+    const errorHandler = () => {
+        let hasErrors = false;
+
+        if (userInput.enteredTitle.trim().length < 3 || userInput.enteredTitle.trim().length === 0) {
+            setTitleError(true);
+            hasErrors = true;
+        } else {
+            setTitleError(false);
+        }
+
+        if (userInput.enteredAmount.trim().length === 0) { // Check if amount is empty
+            setAmountError(true);
+            hasErrors = true;
+        } else {
+            setAmountError(false);
+        }
+
+        if (selectedCategory.length === 0) {
+            setCategoryError(true);
+            hasErrors = true;
+        } else {
+            setCategoryError(false);
+        }
+
+        setFormError(hasErrors); // Set formError based on whether there are errors
+
+        return hasErrors; // Return the hasErrors value
+    }
+
+    const isRequiredHandler = (hasErrors) => {
+        if (hasErrors) {
+            console.log("Please fix the form errors before submitting");
+        } else {
+            console.log("props.closeModal");
+            props.closeModal(); // Call the closeModal function
+            hasErrors = false;
+        }
     };
 
     return (
@@ -124,6 +178,7 @@ const ExpenseForm = (props) => {
                     <div className='flex w-full flex-wrap md:flex-nowrap gap-4'>
                         {/* <label htmlFor='expense-title'>Title</label> */}
                         <Input
+                            isRequired
                             label="Title"
                             className={titleError ? styles['title-alert'] : ''}
                             type='text'
@@ -149,7 +204,9 @@ const ExpenseForm = (props) => {
                     </div>
                     <div className='flex w-full flex-wrap md:flex-nowrap gap-4'>
                         <Input
+                            isRequired
                             label="Amount"
+                            className={amountError ? styles['amount-alert'] : ''}
                             type='number'
                             name='expense-amount'
                             id='expense-amount'
@@ -158,6 +215,7 @@ const ExpenseForm = (props) => {
                             value={userInput.enteredAmount}
                             onChange={(e) => inputHandler('amount', e.target.value)}
                         />
+                        {amountError && <p className={styles['error-message']}>Amount is required</p>}
                     </div>
                     <div className='flex justify-center items-center gap-2 '>
                         {selectedCategDisplay && <span>Category</span>}
@@ -168,8 +226,10 @@ const ExpenseForm = (props) => {
                             }))}
                             selectedValue={selectedCategory}
                             label={selectedCategDisplay || "Select Category"}
-                            onAction={(e) => handleCategoryChange(e)} // Change this line
+                            // onAction={(e) => handleCategoryChange(e)} // Change this line
+                            onAction={handleCategoryChange} // Change this line
                         />
+                        {categoryError && <p className={styles['error-message']}>Category is required</p>}
                     </div>
                 </div>
                 <div className="w-[100px]">
@@ -185,24 +245,30 @@ const ExpenseForm = (props) => {
 
                         Cancel
                     </Button>
+                    <div>
+                        {isMultipleExp ?
+                            <Button
+                                type='submit'
+                                color="primary"
+                                className={btnAction.regularActionBtn}
+                            >
+                                Create
+                            </Button>
+                            :
+                            <Button
+                                onClick={() => {
+                                    const hasErrors = errorHandler();
+                                    isRequiredHandler(hasErrors);
+                                }}
+                                type='submit'
+                                color="primary"
+                                className={btnAction.regularActionBtn}
+                            >
+                                Create
+                            </Button>
 
-                    {isMultipleExp ?
-                        <Button
-                            type='submit'
-                            color="primary"
-                            className={btnAction.regulatActionBtn}
-                        >
-                            Create
-                        </Button>
-                        :
-                        <Button
-                            onClick={props.closeModal}
-                            type='submit'
-                            color="primary"
-                            className={btnAction.regulatActionBtn}
-                        >
-                            Create
-                        </Button>}
+                        }
+                    </div>
                 </div>
             </form>
         </section>

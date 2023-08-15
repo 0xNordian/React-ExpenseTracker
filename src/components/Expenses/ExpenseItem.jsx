@@ -49,8 +49,10 @@ const ExpenseItem = (props) => {
                         {title}
                     </h2>
                 )}
-                <Chip className="text-white" color="success" variant="dot">{expenseData.category}</Chip>
-                <div className={styles['expense-item__price']}>€{expenseData.amount}</div>
+                <div className="flex flex-col gap-2 justify-center items-center">
+                    <div className={styles['expense-item__price']}>€ {parseFloat(expenseData.amount).toLocaleString('en-EN')}</div>
+                    <Chip className="text-white text-xs scale-[85%]" color="success" variant="dot">{expenseData.displayCategory}</Chip>
+                </div>
                 <div className={styles['btns']}>
                     <button onClick={handleTitleChange}>✏️</button>
                     <button onClick={isDeletedHandler}>🗑️</button>
