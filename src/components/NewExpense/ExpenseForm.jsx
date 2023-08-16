@@ -53,7 +53,7 @@ const ExpenseForm = (props) => {
     //! SUBMIT FORM FUNCTION
     const submitHandler = (e) => {
         e.preventDefault();
-        console.log("Submitting form...");
+        // console.log("Submitting form...");
 
         const hasErrors = errorHandler();
 
@@ -69,7 +69,7 @@ const ExpenseForm = (props) => {
                 displayCategory: selectedCategDisplay,
                 backEndCategory: selectedCategory
             };
-            console.log("expenseData: ", expenseData)
+            // console.log("expenseData: ", expenseData)
             //* LIFT SUBMITTED DATA
             props.onSavedExpenseData(expenseData);
 
@@ -105,22 +105,22 @@ const ExpenseForm = (props) => {
 
     //!Manage Multiple Expenses Seletor
     const multipleExpHandler = () => setIsMultipleExp(prevState => !prevState);
-
-    const expCategories = {
-        rent: "Rent",
-        mortage: "Mortage",
-        electricity: "Electricity",
-        waterSupply: "Water",
-        communicationPlan: "Internet and Communication Plan",
-        carLoan: "Car loan",
-        carPurchase: "Car Purchase",
-        carGas: "Car gas",
-        carRentParking: "Rent car parking",
-        carOcasionalParking: "Ocasional car parking",
-        groseryFood: "Grosery food",
-        leisureFood: "Restaurant"
-    };
-
+    const expCategories = props.onExpCategories;
+    // const expCategories = {
+    //     rent: "Rent",
+    //     mortage: "Mortage",
+    //     electricity: "Electricity",
+    //     waterSupply: "Water",
+    //     communicationPlan: "Internet and Communication Plan",
+    //     carLoan: "Car loan",
+    //     carPurchase: "Car Purchase",
+    //     carGas: "Car gas",
+    //     carRentParking: "Rent car parking",
+    //     carOcasionalParking: "Ocasional car parking",
+    //     groseryFood: "Grosery food",
+    //     leisureFood: "Restaurant"
+    // };
+    
     const [selectedCategory, setSelectedCategory] = useState(() => "");
     const [selectedCategDisplay, setSelectedCategDisplay] = useState(() => "")
 
@@ -128,7 +128,7 @@ const ExpenseForm = (props) => {
         const selectedValue = expCategories[selectedItem]; // Get the corresponding value from expCategories
         setSelectedCategory(selectedItem);
         setSelectedCategDisplay(selectedValue);
-        console.log('Category Error:', categoryError); // Add this line
+        // console.log('Category Error:', categoryError); // Add this line
     };
 
     const errorHandler = () => {
@@ -162,9 +162,9 @@ const ExpenseForm = (props) => {
 
     const isRequiredHandler = (hasErrors) => {
         if (hasErrors) {
-            console.log("Please fix the form errors before submitting");
+            // console.log("Please fix the form errors before submitting");
         } else {
-            console.log("props.closeModal");
+            // console.log("props.closeModal");
             props.closeModal(); // Call the closeModal function
             hasErrors = false;
         }

@@ -8,25 +8,55 @@ import NewExpense from '../NewExpense/NewExpense';
 import { Accordion, AccordionItem } from "@nextui-org/react";
 
 const ExpenseCard = (props) => {
-    const [selectedYear, setSelectedYear] = useState("");
+    const [selectedYear, setSelectedYear] = useState("All");
     const [sortOrder, setSortOrder] = useState("asc");
     const [sortProperty, setSortProperty] = useState('amount'); // Default sorting property
+    const [selectedCategory, setSelectedCategory] = useState('All');
+
+    //! Expense Category
+    const expCategories = {
+        all: "All",
+        rent: "Rent",
+        mortage: "Mortage",
+        electricity: "Electricity",
+        waterSupply: "Water",
+        communicationPlan: "Internet and Communication Plan",
+        carLoan: "Car loan",
+        carPurchase: "Car Purchase",
+        carGas: "Car gas",
+        carRentParking: "Rent car parking",
+        carOcasionalParking: "Ocasional car parking",
+        groseryFood: "Grosery food",
+        leisureFood: "Restaurant",
+        shopping: "Shopping"
+    };
+
+    //! EXPENSES FROM APP.jsx FILTERED BY USER SELECTION
+    const filteredExpenses = props.expensesArr.filter(item => {
+        const yearFilter = selectedYear === "" || selectedYear === "All" || item.date.getFullYear().toString() === selectedYear;
+        return yearFilter;
+    });
+
+
+    const filteredCategoryExp = filteredExpenses.filter(item => {
+        const categoryFilter = selectedCategory === "" || selectedCategory === "All" || item.displayCategory === selectedCategory;
+        return categoryFilter;
+    });
+
 
     //! FILTERED YEAR SELECTED BY THE USER
     const filteredYear = (selectedYear) => {
         setSelectedYear(selectedYear);
     }
 
-    //! EXPENSES FROM APP.jsx FILTERED BY USER SELECTION
-    const filteredExpenses = props.expensesArr.filter(item => {
-        if (selectedYear === "") {
-            return true;
-        } else if (selectedYear === "All") {
-            return item
-        } else {
-            return item.date.getFullYear().toString() === selectedYear;
-        }
-    });
+    //! Filtered category by user
+    // const filterCategory = (selectedCategory) => {
+    //     setSelectedCategory(selectedCategory)
+    // }
+
+    const filterCategory = (selectedCategory) => {
+        setSelectedCategory(selectedCategory)
+    }
 
     //! Handle sorting change (both order and property)
     const handleSortChange = (property, order) => {
@@ -44,7 +74,7 @@ const ExpenseCard = (props) => {
     const ascOrder = (a, b) => a[sortProperty] - b[sortProperty];
     const dscOrder = (a, b) => b[sortProperty] - a[sortProperty];
 
-    const expensesCards = filteredExpenses
+    const expensesCards = filteredCategoryExp
         .sort(sortOrder === 'asc' ? ascOrder : dscOrder)
         .map((expense) => (
             <ExpenseItem key={expense.id} expense={expense} deleteExp={() => deleteSelExp(expense.id)} />
@@ -61,6 +91,8 @@ const ExpenseCard = (props) => {
     const totalExpHandler = () => {
         const total = filteredExpenses.reduce((acc, item) => acc + Number(item.amount), 0);
         setTotalExp(total);
+        // console.log("filteredCategoryExp: ", filteredCategoryExp)
+        // console.log("filteredExpenses: ", filteredExpenses)
     }
 
     const filter = <img src="/public/filter.png" alt="Filter Icon" className={styles['filter-icon']} />;
@@ -69,7 +101,7 @@ const ExpenseCard = (props) => {
     if (props.expensesArr.length === 0) {
         return (
             <>
-                <NewExpense expensesArr={props.expensesArr} addExpenseHandler={props.addExpenseHandler} numExp={numExp} totalExp={totalExp} />
+                <NewExpense expensesArr={props.expensesArr} addExpenseHandler={props.addExpenseHandler} numExp={numExp} totalExp={totalExp} onExpCategories={expCategories} />
                 <Card className={styles['expenses']}>
                     <h2 className={styles['expenses__title']}>You don't have any expenses registered yet! 🤷‍♂️</h2>
                 </Card>
@@ -78,13 +110,27 @@ const ExpenseCard = (props) => {
     } else if (expensesCards.length === 0) {
         return (
             <>
-                <NewExpense expensesArr={props.expensesArr} addExpenseHandler={props.addExpenseHandler} numExp={numExp} totalExp={totalExp} />
+                <NewExpense expensesArr={props.expensesArr} addExpenseHandler={props.addExpenseHandler} numExp={numExp} totalExp={totalExp} onExpCategories={expCategories} />
                 <Card className={`${styles['expenses']} pl-6`}>
-                    <div className={`${styles['filterAndCard']} flex justify-start mb-4 p-0`}>
-                        <span>Year</span>
-                        <ExpenseFilter onFilterExpense={filteredYear} initialYear={selectedYear} />
+                    <div className={`${styles['filterAndCard']} flex justify-start mb-4 p-0 gap-4`}>
+                        <div className="flex flex-col justify-center items-center gap-2">
+                            <span>Year</span>
+                            <ExpenseFilter onFilterExpense={filteredYear} initialYear={selectedYear} />
+                        </div>
+                        <div className="flex flex-col justify-center items-center gap-2">
+                            <span>Category</span>
+                            <CustomDropdown
+                                items={Object.entries(expCategories).map(([key, value]) => ({
+                                    value: value,      // Corrected this line
+                                    label: value
+                                }))}
+                                selectedValue={selectedCategory}
+                                onAction={(selectedKey) => filterCategory(selectedKey)}
+                                className="capitalize text-[#99ddc8] bg-[#283f3b] hover:bg-[#659b5e] hover:text-[#283f3b]"
+                            />
+                        </div>
                     </div>
-                    <h2 className={styles['expenses__title']}>You don't have any expenses registered yet for {selectedYear}! 🤷‍♂️</h2>
+                    <h2 className={styles['expenses__title']}>You don't have any expenses registered yet for {selectedCategory} in {selectedYear}! 🤷‍♂️</h2>
                 </Card>
             </>
         )
@@ -92,42 +138,54 @@ const ExpenseCard = (props) => {
         //! EXPENSE RENDER
         return (
             <>
-                <NewExpense expensesArr={props.expensesArr} addExpenseHandler={props.addExpenseHandler} numExp={numExp} totalExp={totalExp} />
+                <NewExpense expensesArr={props.expensesArr} addExpenseHandler={props.addExpenseHandler} numExp={numExp} totalExp={totalExp} onExpCategories={expCategories} />
                 <Card className={`${styles['expenses']} p-10`}>
                     <Accordion variant="splitted" className={styles['custom-accordion']}>
                         <AccordionItem key="1" title={filter} aria-label="Accordion" className={`${styles['custom-accordion-item']} ${styles['custom-title']}`}>
-                            <div className={`${styles.filterAndCard} ${styles.glass}`}>
-                                <div className={`${styles['sort']}`}>
+                            <div className={`${styles.filterAndCard} ${styles.glass} flex justify-around gap-4 `}>
+                                <div className={`${styles['sort']} flex flex-col`}>
                                     <span>Year</span>
                                     <ExpenseFilter onFilterExpense={filteredYear} />
                                 </div>
-                                <div className={styles['order']}>
-                                    <div className={`${styles['sort']}`}>
-                                        <span>Sort By</span>
-                                        <CustomDropdown
-                                            items={[
-                                                { value: 'amount', label: 'Amount' },
-                                                { value: 'date', label: 'Date' }
-                                            ]}
-                                            selectedValue={sortProperty}
-                                            onAction={(selectedKey) => handleSortChange(selectedKey, sortOrder)}
-                                            className="capitalize text-[#99ddc8] bg-[#283f3b] hover:bg-[#659b5e] hover:text-[#283f3b]"
-                                        />
-                                    </div>
-                                    <div className={styles['sort']}>
-                                        <span>Order</span>
-                                        <CustomDropdown
-                                            items={[
-                                                { value: 'asc', label: '⬆️' },
-                                                { value: 'dsc', label: '⬇️' }
-                                            ]}
-                                            selectedValue={sortOrder}
-                                            onAction={(selectedKey) => handleSortChange(sortProperty, selectedKey)}
-                                            className="capitalize text-[#99ddc8] bg-[#283f3b] hover:bg-[#659b5e] hover:text-[#283f3b]"
-                                            label={sortOrder === 'asc' ? '⬆️' : '⬇️'}
-                                        />
-                                    </div>
+                                <div className={`${styles['sort']} flex flex-col`}>
+                                    <span>Category</span>
+                                    <CustomDropdown
+                                        items={Object.entries(expCategories).map(([key, value]) => ({
+                                            value: value,      // Corrected this line
+                                            label: value
+                                        }))}
+                                        selectedValue={selectedCategory}
+                                        onAction={(selectedKey) => filterCategory(selectedKey)}
+                                        className="capitalize text-[#99ddc8] bg-[#283f3b] hover:bg-[#659b5e] hover:text-[#283f3b]"
+                                    />
                                 </div>
+                                {/* <div className={styles['order']}> */}
+                                <div className={`${styles['sort']} flex flex-col`}>
+                                    <span>Sort By</span>
+                                    <CustomDropdown
+                                        items={[
+                                            { value: 'amount', label: 'Amount' },
+                                            { value: 'date', label: 'Date' }
+                                        ]}
+                                        selectedValue={sortProperty}
+                                        onAction={(selectedKey) => handleSortChange(selectedKey, sortOrder)}
+                                        className="capitalize text-[#99ddc8] bg-[#283f3b] hover:bg-[#659b5e] hover:text-[#283f3b]"
+                                    />
+                                </div>
+                                <div className={`${styles['sort']} flex flex-col`}>
+                                    <span>Order</span>
+                                    <CustomDropdown
+                                        items={[
+                                            { value: 'asc', label: '⬆️' },
+                                            { value: 'dsc', label: '⬇️' }
+                                        ]}
+                                        selectedValue={sortOrder}
+                                        onAction={(selectedKey) => handleSortChange(sortProperty, selectedKey)}
+                                        className="capitalize text-[#99ddc8] bg-[#283f3b] hover:bg-[#659b5e] hover:text-[#283f3b]"
+                                        label={sortOrder === 'asc' ? '⬆️' : '⬇️'}
+                                    />
+                                </div>
+                                {/* </div> */}
                             </div>
                         </AccordionItem>
                     </Accordion>

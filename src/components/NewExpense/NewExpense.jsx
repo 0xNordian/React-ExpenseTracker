@@ -5,7 +5,7 @@ import styles from './newExpense.module.css'
 import { Card, CardFooter, Image, Button, Progress, Input, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from "@nextui-org/react";
 
 const NewExpense = (props) => {
-    console.log("props.totalExp: ", props.totalExp)
+    // console.log("props.totalExp: ", props.totalExp)
     const [currentId, setCurrentId] = useState(1);
     const saveExpenseLiftUp = (enteredExpenseData) => {
         const expenseData = {
@@ -43,7 +43,10 @@ const NewExpense = (props) => {
                         <ExpenseForm
                             onSavedExpenseData={saveExpenseLiftUp}
                             closeModal={closeModal}
-                            currentId={currentId} />} />
+                            currentId={currentId}
+                            onExpCategories={props.onExpCategories} 
+                        />}
+                />
             </Card>
         </div>
     )

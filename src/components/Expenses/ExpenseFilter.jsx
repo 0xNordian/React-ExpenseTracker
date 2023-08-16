@@ -13,9 +13,9 @@ const ExpenseFilter = (props) => {
     );
 
     const filterYearHandler = (selectedYear) => {
-        console.log("Selected year:", selectedYear);
+        // console.log("Selected year:", selectedYear);
         props.onFilterExpense(selectedYear);
-    }
+    } 
 
     return (
         <Dropdown>
