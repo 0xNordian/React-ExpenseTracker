@@ -63,7 +63,7 @@ const ExpenseCard = (props) => {
         setTotalExp(total);
     }
 
-    const filter = <img src="../../../public/filter.png" alt="Filter Icon" className={styles['filter-icon']} />;
+    const filter = <img src="/public/filter.png" alt="Filter Icon" className={styles['filter-icon']} />;
 
     //! NO EXPENSE FOUND
     if (props.expensesArr.length === 0) {
