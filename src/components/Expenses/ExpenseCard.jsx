@@ -63,6 +63,8 @@ const ExpenseCard = (props) => {
         setTotalExp(total);
     }
 
+    const filter = <img src="../../../public/filter.png" alt="Filter Icon" className={styles['filter-icon']} />;
+
     //! NO EXPENSE FOUND
     if (props.expensesArr.length === 0) {
         return (
@@ -92,41 +94,41 @@ const ExpenseCard = (props) => {
             <>
                 <NewExpense expensesArr={props.expensesArr} addExpenseHandler={props.addExpenseHandler} numExp={numExp} totalExp={totalExp} />
                 <Card className={`${styles['expenses']} p-10`}>
-                <Accordion variant="splitted" className={styles['custom-accordion']}>
-                    <AccordionItem key="1" aria-label="Accordion" title="Filters" className={`${styles['custom-accordion-item']} ${styles['custom-title']}`}>
-                        <div className={`${styles.filterAndCard} ${styles.glass}`}>
-                            <div className={`${styles['sort']}`}>
-                                <span>Year</span>
-                                <ExpenseFilter onFilterExpense={filteredYear} />
-                            </div>
-                            <div className={styles['order']}>
+                    <Accordion variant="splitted" className={styles['custom-accordion']}>
+                        <AccordionItem key="1" title={filter} aria-label="Accordion" className={`${styles['custom-accordion-item']} ${styles['custom-title']}`}>
+                            <div className={`${styles.filterAndCard} ${styles.glass}`}>
                                 <div className={`${styles['sort']}`}>
-                                    <span>Sort By</span>
-                                    <CustomDropdown
-                                        items={[
-                                            { value: 'amount', label: 'Amount' },
-                                            { value: 'date', label: 'Date' }
-                                        ]}
-                                        selectedValue={sortProperty}
-                                        onAction={(selectedKey) => handleSortChange(selectedKey, sortOrder)}
-                                        className="capitalize text-[#99ddc8] bg-[#283f3b] hover:bg-[#659b5e] hover:text-[#283f3b]"
-                                    />
+                                    <span>Year</span>
+                                    <ExpenseFilter onFilterExpense={filteredYear} />
                                 </div>
-                                <div className={styles['sort']}>
-                                    <span>Order</span>
-                                    <CustomDropdown
-                                        items={[
-                                            { value: 'asc', label: '⬆️' },
-                                            { value: 'dsc', label: '⬇️' }
-                                        ]}
-                                        selectedValue={sortOrder}
-                                        onAction={(selectedKey) => handleSortChange(sortProperty, selectedKey)}
-                                        className="capitalize text-[#99ddc8] bg-[#283f3b] hover:bg-[#659b5e] hover:text-[#283f3b]"
-                                        label={sortOrder === 'asc' ? '⬆️' : '⬇️'}
-                                    />
+                                <div className={styles['order']}>
+                                    <div className={`${styles['sort']}`}>
+                                        <span>Sort By</span>
+                                        <CustomDropdown
+                                            items={[
+                                                { value: 'amount', label: 'Amount' },
+                                                { value: 'date', label: 'Date' }
+                                            ]}
+                                            selectedValue={sortProperty}
+                                            onAction={(selectedKey) => handleSortChange(selectedKey, sortOrder)}
+                                            className="capitalize text-[#99ddc8] bg-[#283f3b] hover:bg-[#659b5e] hover:text-[#283f3b]"
+                                        />
+                                    </div>
+                                    <div className={styles['sort']}>
+                                        <span>Order</span>
+                                        <CustomDropdown
+                                            items={[
+                                                { value: 'asc', label: '⬆️' },
+                                                { value: 'dsc', label: '⬇️' }
+                                            ]}
+                                            selectedValue={sortOrder}
+                                            onAction={(selectedKey) => handleSortChange(sortProperty, selectedKey)}
+                                            className="capitalize text-[#99ddc8] bg-[#283f3b] hover:bg-[#659b5e] hover:text-[#283f3b]"
+                                            label={sortOrder === 'asc' ? '⬆️' : '⬇️'}
+                                        />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                         </AccordionItem>
                     </Accordion>
                     {expensesCards}

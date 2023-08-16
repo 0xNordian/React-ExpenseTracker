@@ -77,4 +77,9 @@
 .custom-accordion-item::part(title) {
     background-color: #283f3b;
     color: #99ddc8;
-  }
+}
+
+.filter-icon{
+    width: 30px;
+    filter: invert();
+}
