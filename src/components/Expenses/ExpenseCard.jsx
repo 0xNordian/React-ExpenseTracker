@@ -12,6 +12,8 @@ const ExpenseCard = (props) => {
     const [sortOrder, setSortOrder] = useState("asc");
     const [sortProperty, setSortProperty] = useState('amount'); // Default sorting property
     const [selectedCategory, setSelectedCategory] = useState('All');
+    const initialSet = props.initialYear ? new Set([props.initialYear]) : new Set(["All"]);
+    const [selectedKeys, setSelectedKeys] = useState(initialSet);
 
     //! Expense Category
     const expCategories = {
@@ -30,6 +32,16 @@ const ExpenseCard = (props) => {
         leisureFood: "Restaurant",
         shopping: "Shopping"
     };
+
+        //! Expense Year
+        const expYears = {
+            all: "All",
+            2019: "2019",
+            2020: "2020",
+            2021: "2021",
+            2022: "2022",
+            2023: "2023"
+        };
 
     //! EXPENSES FROM APP.jsx FILTERED BY USER SELECTION
     const filteredExpenses = props.expensesArr.filter(item => {
@@ -160,7 +172,16 @@ const ExpenseCard = (props) => {
                     <div className={`${styles.filterAndCard} ${styles.glass} flex justify-around gap-4 `}>
                         <div className={`${styles['sort']} flex flex-col`}>
                             <span>Year</span>
-                            <ExpenseFilter onFilterExpense={filteredYear} />
+                            {/* <ExpenseFilter onFilterExpense={filteredYear} /> */}
+                            <CustomDropdown
+                                items={Object.entries(expYears).map(([key, value]) => ({
+                                    value: value,      // Corrected this line
+                                    label: value
+                                }))}
+                                selectedValue={selectedYear}
+                                onAction={(selectedKey) => filteredYear(selectedKey)}
+                                className="capitalize text-[#99ddc8] bg-[#283f3b] hover:bg-[#659b5e] hover:text-[#283f3b]"
+                            />
                         </div>
                         <div className={`${styles['sort']} flex flex-col`}>
                             <span>Category</span>

@@ -2,7 +2,7 @@ import React from "react";
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@nextui-org/react";
 
 // CustomDropdown.jsx
-const CustomDropdown = ({ items, selectedValue, onAction, className, label }) => {
+const CustomDropdown = ({ items, selectedValue, onAction, className, label, onSelectionChange }) => {
     return (
         <Dropdown>
             <DropdownTrigger>
