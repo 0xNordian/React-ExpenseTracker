@@ -135,7 +135,15 @@ const ExpenseCard = (props) => {
                     <div className={`${styles['filterAndCard']} flex justify-between items-center mb-6 p-0 gap-4`}>
                         <div className="flex flex-col justify-center items-center gap-2">
                             <span>Year</span>
-                            <ExpenseFilter onFilterExpense={filteredYear} initialYear={selectedYear} />
+                            <CustomDropdown
+                                items={Object.entries(expYears).map(([key, value]) => ({
+                                    value: value,      // Corrected this line
+                                    label: value
+                                }))}
+                                selectedValue={selectedYear}
+                                onAction={(selectedKey) => filteredYear(selectedKey)}
+                                className="capitalize text-[#99ddc8] bg-[#283f3b] hover:bg-[#659b5e] hover:text-[#283f3b]"
+                            />
                         </div>
                         <div className="flex flex-col justify-center items-center gap-2">
                             <span>Category</span>
