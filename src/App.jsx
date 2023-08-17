@@ -15,8 +15,8 @@ const App = () => {
   };
 
   return (
-    <div className={styles['main-container']}>
-      <div className="flex gap-2">
+    <div className={`${styles['main-container']}`}>
+      <div className="flex gap-2 mt-16">
         <h1 className="text-[#99ddc8] text-[2rem]">TrakEx</h1>
         <img className="w-[50px]" src="/money-wings.gif" />
       </div>
