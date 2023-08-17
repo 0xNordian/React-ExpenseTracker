@@ -186,7 +186,7 @@ const ExpenseCard = (props) => {
                                 }))}
                                 selectedValue={selectedYear}
                                 onAction={(selectedKey) => filteredYear(selectedKey)}
-                                className="capitalize text-[#99ddc8] bg-[#283f3b] hover:bg-[#659b5e] hover:text-[#283f3b]"
+                                className="capitalize text-[#99ddc8] bg-[#283f3b] hover:bg-[#99ddc8] hover:text-[#283f3b] hover:border-[#283f3b]"
                             />
                         </div>
                         <div className={`${styles['sort']} flex flex-col`}>
@@ -198,7 +198,7 @@ const ExpenseCard = (props) => {
                                 }))}
                                 selectedValue={selectedCategory}
                                 onAction={(selectedKey) => filterCategory(selectedKey)}
-                                className="capitalize text-[#99ddc8] bg-[#283f3b] hover:bg-[#659b5e] hover:text-[#283f3b]"
+                                className="capitalize text-[#99ddc8] bg-[#283f3b] hover:bg-[#99ddc8] hover:text-[#283f3b] hover:border-[#283f3b]"
                             />
                         </div>
                         {/* <div className={styles['order']}> */}
@@ -211,7 +211,7 @@ const ExpenseCard = (props) => {
                                 ]}
                                 selectedValue={sortProperty}
                                 onAction={(selectedKey) => handleSortChange(selectedKey, sortOrder)}
-                                className="capitalize text-[#99ddc8] bg-[#283f3b] hover:bg-[#659b5e] hover:text-[#283f3b]"
+                                className="capitalize text-[#99ddc8] bg-[#283f3b] hover:bg-[#99ddc8] hover:text-[#283f3b] hover:border-[#283f3b]"
                             />
                         </div>
                         <div className={`${styles['sort']} flex flex-col`}>
@@ -223,11 +223,11 @@ const ExpenseCard = (props) => {
                                 ]}
                                 selectedValue={sortOrder}
                                 onAction={(selectedKey) => handleSortChange(sortProperty, selectedKey)}
-                                className="capitalize text-[#99ddc8] bg-[#283f3b] hover:bg-[#659b5e] hover:text-[#283f3b]"
+                                className="capitalize text-[#99ddc8] bg-[#283f3b] hover:bg-[#99ddc8] hover:text-[#283f3b] hover:border-[#283f3b]"
                                 label={sortOrder === 'asc' ? '⬆️' : '⬇️'}
                             />
                         </div>
-                        <button onClick={resetFiltersHandler}>Reset</button>
+                        <button className="transform hover:scale-105 transition-transform duration-300" onClick={resetFiltersHandler}>Reset</button>
                     </div>
                     {expensesCards}
                 </Card>

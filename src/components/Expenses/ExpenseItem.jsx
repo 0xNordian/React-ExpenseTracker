@@ -59,7 +59,7 @@ const ExpenseItem = (props) => {
                         <h2 className={styles['expense_item__title']}>
                             {title}
                         </h2>
-                        <Chip className="text-white text-xs scale-[85%] cursor-pointer transition hover:bg-[#283f3b] hover:text-[#99ddc8] transform hover:scale-90 hover:shadow-md" color="success" variant="dot" onClick={filterByCategory}>{expenseData.displayCategory}</Chip>
+                        <Chip className="text-white text-xs scale-[85%] cursor-pointer hover:bg-[#283f3b] hover:text-[#99ddc8] transform hover:scale-90 transition-transform duration-300 hover:shadow-md" color="success" variant="dot" onClick={filterByCategory}>{expenseData.displayCategory}</Chip>
                     </div>
                 )}
                 <div className={styles['expense-item__price']}>€ {parseFloat(expenseData.amount).toLocaleString('en-EN')}</div>
