@@ -16,7 +16,7 @@ const App = () => {
 
   return (
     <div className={styles['main-container']}>
-      <h1 className="text-[#99ddc8] text-[2rem]">TRAKEX 🫰</h1>
+      <h1 className="text-[#99ddc8] text-[2rem]">TrakEx 🫰</h1>
       <div className={`${styles['container']}`}>
         <ExpenseCard expensesArr={expenses} deleteExp={deleteExpenseHandler} addExpenseHandler={addExpenseHandler}/>
       </div>

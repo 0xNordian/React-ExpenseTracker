@@ -30,9 +30,9 @@ const ExpenseItem = (props) => {
         props.deleteExp(expenseData.id);
     }
 
-    console.log('isEditing:', isEditing);
-    console.log('title:', title);
-    console.log('displayCategory:', expenseData.displayCategory);
+    // console.log('isEditing:', isEditing);
+    // console.log('title:', title);
+    // console.log('displayCategory:', expenseData.displayCategory);
 
 
     return (
