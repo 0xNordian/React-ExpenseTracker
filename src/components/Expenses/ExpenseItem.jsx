@@ -30,6 +30,11 @@ const ExpenseItem = (props) => {
         props.deleteExp(expenseData.id);
     }
 
+    const filterByCategory = () => {
+        props.onFilterCategory(expenseData.displayCategory);
+    }
+
+
     // console.log('isEditing:', isEditing);
     // console.log('title:', title);
     // console.log('displayCategory:', expenseData.displayCategory);
@@ -54,7 +59,7 @@ const ExpenseItem = (props) => {
                         <h2 className={styles['expense_item__title']}>
                             {title}
                         </h2>
-                        <Chip className="text-white text-xs scale-[85%]" color="success" variant="dot">{expenseData.displayCategory}</Chip>
+                        <Chip className="text-white text-xs scale-[85%] cursor-pointer" color="success" variant="dot" onClick={filterByCategory}>{expenseData.displayCategory}</Chip>
                     </div>
                 )}
                 <div className={styles['expense-item__price']}>€ {parseFloat(expenseData.amount).toLocaleString('en-EN')}</div>

@@ -89,7 +89,7 @@ const ExpenseCard = (props) => {
     const expensesCards = filteredCategoryExp
         .sort(sortOrder === 'asc' ? ascOrder : dscOrder)
         .map((expense) => (
-            <ExpenseItem key={expense.id} expense={expense} deleteExp={() => deleteSelExp(expense.id)} />
+            <ExpenseItem key={expense.id} expense={expense} deleteExp={() => deleteSelExp(expense.id)} onFilterCategory={filterCategory}/>
         ));
 
     const [numExp, setNumExp] = useState(() => 0)
@@ -109,8 +109,6 @@ const ExpenseCard = (props) => {
         setSelectedCategory("All");
         setSelectedYear((prev) => prev = "All");
     }
-
-    
 
     // const filterIcon = <img src="/public/filter.png" alt="Filter Icon" className={styles['filter-icon']} />;
 
