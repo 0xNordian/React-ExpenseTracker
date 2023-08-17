@@ -28,6 +28,9 @@
 }
 
 .expense-item__price {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-size: 1rem;
     font-weight: bold;
     color: #99ddc8;
