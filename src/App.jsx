@@ -18,7 +18,7 @@ const App = () => {
     <div className={styles['main-container']}>
       <div className="flex gap-2">
         <h1 className="text-[#99ddc8] text-[2rem]">TrakEx</h1>
-        <img className="w-[50px]" src="../public/money-wings.gif" />
+        <img className="w-[50px]" src="/money-wings.gif" />
       </div>
       <div className={`${styles['container']}`}>
         <ExpenseCard expensesArr={expenses} deleteExp={deleteExpenseHandler} addExpenseHandler={addExpenseHandler} />
