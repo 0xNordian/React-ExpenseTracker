@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
+import styles from "./DefaultAccordion.module.css"
+import ExpenseContext from "../Context/ExpenseContext";
 import {
     Accordion,
     AccordionHeader,
@@ -22,14 +24,19 @@ function Icon({ id, open }) {
 
 export function DefaultAccordion(props) {
     const [open, setOpen] = React.useState(0);
+    const { selectedYear, selectedCategory } = useContext(ExpenseContext);
 
     const handleOpen = (value) => setOpen(open === value ? 0 : value);
+    const filterStatus = selectedYear === "All" && selectedCategory === "All" ?  "filterOff" : "filterOn";
 
     return (
         <>
             <Accordion open={open === 1} icon={<Icon id={1} open={open} />}>
                 <div className="w-full flex justify-end">
-                    <AccordionHeader onClick={() => handleOpen(1)} className="filter invert mx-2 border-b-slate-950">Filters</AccordionHeader>
+                    <div className="w-full flex justify-start">
+                        <span className={`${styles['circle']} ${styles[filterStatus]}`}></span>
+                        <AccordionHeader onClick={() => handleOpen(1)} className={`filter invert mx-2 border-b-slate-950 `}>Filters</AccordionHeader>
+                    </div>
                 </div>
                 <AccordionBody>
                     {props.filterBody}

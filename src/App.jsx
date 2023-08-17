@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ExpenseCard from "./components/Expenses/ExpenseCard";
+import TableView from "./components/TableView/TableView"
 import styles from './App.module.css'
 
 const App = () => {
@@ -22,6 +23,7 @@ const App = () => {
       </div>
       <div className={`${styles['container']}`}>
         <ExpenseCard expensesArr={expenses} deleteExp={deleteExpenseHandler} addExpenseHandler={addExpenseHandler} />
+        {/* <TableView /> */}
       </div>
     </div>
   )

@@ -1,0 +1,30 @@
+.circle {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    position: relative;
+    top: 10px;
+    left: 80px;
+}
+
+.filterOn {
+    background-color: #02d693;
+    animation: sonar 1.5s ease-out infinite;
+}
+
+.filterOff {
+    background-color: lightgrey;
+    animation: sonar 1.5s ease-out infinite;
+}
+
+@keyframes sonar {
+    0% {
+        transform: scale(0.2);
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+}

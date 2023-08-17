@@ -2,10 +2,10 @@ import ExpenseItem from './ExpenseItem';
 import styles from './ExpenseCard.module.css'
 import Card from '../UI/Card'
 import CustomDropdown from '../Utils/CustomDropdown';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import NewExpense from '../NewExpense/NewExpense';
 import { DefaultAccordion } from '../Utils/DefaultAccordion';
-// import { Accordion, AccordionItem } from "@nextui-org/react";
+import ExpenseContext from '../Context/ExpenseContext';
 
 const ExpenseCard = (props) => {
     const [selectedYear, setSelectedYear] = useState("All");
@@ -128,113 +128,114 @@ const ExpenseCard = (props) => {
     } else if (expensesCards.length === 0) {
         return (
             <>
+                {/* <ExpenseContext.Provider value={{ selectedYear, selectedCategory }}> */}
                 <NewExpense expensesArr={props.expensesArr} addExpenseHandler={props.addExpenseHandler} numExp={numExp} totalExp={totalExp} onExpCategories={expCategories} />
                 <Card className={`${styles['expenses']} pl-6`}>
-                    <div className={`${styles['filterAndCard']} flex justify-between items-center mb-6 p-0 gap-4`}>
-                        <div className="flex flex-col justify-center items-center gap-2">
-                            <span>Year</span>
-                            <CustomDropdown
-                                items={Object.entries(expYears).map(([key, value]) => ({
-                                    value: value,      // Corrected this line
-                                    label: value
-                                }))}
-                                selectedValue={selectedYear}
-                                onAction={(selectedKey) => filteredYear(selectedKey)}
-                                className="capitalize text-[#99ddc8] bg-[#283f3b] hover:bg-[#659b5e] hover:text-[#283f3b]"
-                            />
-                        </div>
-                        <div className="flex flex-col justify-center items-center gap-2">
-                            <span>Category</span>
-                            <CustomDropdown
-                                items={Object.entries(expCategories).map(([key, value]) => ({
-                                    value: value,      // Corrected this line
-                                    label: value
-                                }))}
-                                selectedValue={selectedCategory}
-                                onAction={(selectedKey) => filterCategory(selectedKey)}
-                                className="capitalize text-[#99ddc8] bg-[#283f3b] hover:bg-[#659b5e] hover:text-[#283f3b]"
-                            />
-                        </div>
-                        <div className="ml-auto mr-2">
-                            <button className="" onClick={resetFiltersHandler}>Reset</button>
-                        </div>
-                    </div>
-                    <h2 className={styles['expenses__title']}>You don't have any expenses registered yet for {selectedCategory} in {selectedYear}! 🤷‍♂️</h2>
+                    <DefaultAccordion filterBody={
+                        <>
+                            <div className={`${styles['filterAndCard']} flex justify-between items-center mb-6 p-0 gap-4`}>
+                                <div className="flex flex-col justify-center items-center gap-2">
+                                    <span>Year</span>
+                                    <CustomDropdown
+                                        items={Object.entries(expYears).map(([key, value]) => ({
+                                            value: value,      // Corrected this line
+                                            label: value
+                                        }))}
+                                        selectedValue={selectedYear}
+                                        onAction={(selectedKey) => filteredYear(selectedKey)}
+                                        className="capitalize text-[#99ddc8] bg-[#283f3b] hover:bg-[#659b5e] hover:text-[#283f3b]"
+                                    />
+                                </div>
+                                <div className="flex flex-col justify-center items-center gap-2">
+                                    <span>Category</span>
+                                    <CustomDropdown
+                                        items={Object.entries(expCategories).map(([key, value]) => ({
+                                            value: value,      // Corrected this line
+                                            label: value
+                                        }))}
+                                        selectedValue={selectedCategory}
+                                        onAction={(selectedKey) => filterCategory(selectedKey)}
+                                        className="capitalize text-[#99ddc8] bg-[#283f3b] hover:bg-[#659b5e] hover:text-[#283f3b]"
+                                    />
+                                </div>
+                                <div className="ml-auto mr-2">
+                                    <button className="" onClick={resetFiltersHandler}>Reset</button>
+                                </div>
+                            </div>
+                            <h2 className={styles['expenses__title']}>You don't have any expenses registered yet for {selectedCategory} in {selectedYear}! 🤷‍♂️</h2>
+                        </>
+                    }>
+                    </DefaultAccordion>
                 </Card>
+                {/* </ExpenseContext.Provider> */}
             </>
         )
     } else {
         //! EXPENSE RENDER
         return (
             <>
+                {/* <ExpenseContext.Provider value={{ selectedYear, selectedCategory }}> */}
                 <NewExpense expensesArr={props.expensesArr} addExpenseHandler={props.addExpenseHandler} numExp={numExp} totalExp={totalExp} onExpCategories={expCategories} />
 
                 <Card className={`${styles['expenses']} p-10`}>
-                    {/* <Accordion variant="splitted" className={styles['custom-accordion']}>
-                        <AccordionItem key="1" title={filterIcon} aria-label="Accordion" className={`${styles['custom-accordion-item']} ${styles['custom-title']}`}>
-                            
-                        </AccordionItem>
-                    </Accordion> */}
-                    <DefaultAccordion filterBody={ 
+                    <DefaultAccordion filterBody={
                         <div className={`${styles.filterAndCard} ${styles.glass} flex justify-around gap-4 `}>
-                        <div className={`${styles['sort']} flex flex-col`}>
-                            <span>Year</span>
-                            {/* <ExpenseFilter onFilterExpense={filteredYear} /> */}
-                            <CustomDropdown
-                                items={Object.entries(expYears).map(([key, value]) => ({
-                                    value: value,      // Corrected this line
-                                    label: value
-                                }))}
-                                selectedValue={selectedYear}
-                                onAction={(selectedKey) => filteredYear(selectedKey)}
-                                className="capitalize text-[#99ddc8] bg-[#283f3b] hover:bg-[#99ddc8] hover:text-[#283f3b] hover:border-[#283f3b]"
-                            />
+                            <div className={`${styles['sort']} flex flex-col`}>
+                                <span>Year</span>
+                                <CustomDropdown
+                                    items={Object.entries(expYears).map(([key, value]) => ({
+                                        value: value,      // Corrected this line
+                                        label: value
+                                    }))}
+                                    selectedValue={selectedYear}
+                                    onAction={(selectedKey) => filteredYear(selectedKey)}
+                                    className="capitalize text-[#99ddc8] bg-[#283f3b] hover:bg-[#99ddc8] hover:text-[#283f3b] hover:border-[#283f3b]"
+                                />
+                            </div>
+                            <div className={`${styles['sort']} flex flex-col`}>
+                                <span>Category</span>
+                                <CustomDropdown
+                                    items={Object.entries(expCategories).map(([key, value]) => ({
+                                        value: value,      // Corrected this line
+                                        label: value
+                                    }))}
+                                    selectedValue={selectedCategory}
+                                    onAction={(selectedKey) => filterCategory(selectedKey)}
+                                    className="capitalize text-[#99ddc8] bg-[#283f3b] hover:bg-[#99ddc8] hover:text-[#283f3b] hover:border-[#283f3b]"
+                                />
+                            </div>
+                            <div className={`${styles['sort']} flex flex-col`}>
+                                <span>Sort By</span>
+                                <CustomDropdown
+                                    items={[
+                                        { value: 'amount', label: 'Amount' },
+                                        { value: 'date', label: 'Date' }
+                                    ]}
+                                    selectedValue={sortProperty}
+                                    onAction={(selectedKey) => handleSortChange(selectedKey, sortOrder)}
+                                    className="capitalize text-[#99ddc8] bg-[#283f3b] hover:bg-[#99ddc8] hover:text-[#283f3b] hover:border-[#283f3b]"
+                                />
+                            </div>
+                            <div className={`${styles['sort']} flex flex-col`}>
+                                <span>Order</span>
+                                <CustomDropdown
+                                    items={[
+                                        { value: 'asc', label: '⬆️' },
+                                        { value: 'dsc', label: '⬇️' }
+                                    ]}
+                                    selectedValue={sortOrder}
+                                    onAction={(selectedKey) => handleSortChange(sortProperty, selectedKey)}
+                                    className="capitalize text-[#99ddc8] bg-[#283f3b] hover:bg-[#99ddc8] hover:text-[#283f3b] hover:border-[#283f3b]"
+                                    label={sortOrder === 'asc' ? '⬆️' : '⬇️'}
+                                />
+                            </div>
+                            <button className="transform hover:scale-105 transition-transform duration-300" onClick={resetFiltersHandler}>Reset</button>
                         </div>
-                        <div className={`${styles['sort']} flex flex-col`}>
-                            <span>Category</span>
-                            <CustomDropdown
-                                items={Object.entries(expCategories).map(([key, value]) => ({
-                                    value: value,      // Corrected this line
-                                    label: value
-                                }))}
-                                selectedValue={selectedCategory}
-                                onAction={(selectedKey) => filterCategory(selectedKey)}
-                                className="capitalize text-[#99ddc8] bg-[#283f3b] hover:bg-[#99ddc8] hover:text-[#283f3b] hover:border-[#283f3b]"
-                            />
-                        </div>
-                        {/* <div className={styles['order']}> */}
-                        <div className={`${styles['sort']} flex flex-col`}>
-                            <span>Sort By</span>
-                            <CustomDropdown
-                                items={[
-                                    { value: 'amount', label: 'Amount' },
-                                    { value: 'date', label: 'Date' }
-                                ]}
-                                selectedValue={sortProperty}
-                                onAction={(selectedKey) => handleSortChange(selectedKey, sortOrder)}
-                                className="capitalize text-[#99ddc8] bg-[#283f3b] hover:bg-[#99ddc8] hover:text-[#283f3b] hover:border-[#283f3b]"
-                            />
-                        </div>
-                        <div className={`${styles['sort']} flex flex-col`}>
-                            <span>Order</span>
-                            <CustomDropdown
-                                items={[
-                                    { value: 'asc', label: '⬆️' },
-                                    { value: 'dsc', label: '⬇️' }
-                                ]}
-                                selectedValue={sortOrder}
-                                onAction={(selectedKey) => handleSortChange(sortProperty, selectedKey)}
-                                className="capitalize text-[#99ddc8] bg-[#283f3b] hover:bg-[#99ddc8] hover:text-[#283f3b] hover:border-[#283f3b]"
-                                label={sortOrder === 'asc' ? '⬆️' : '⬇️'}
-                            />
-                        </div>
-                        <button className="transform hover:scale-105 transition-transform duration-300" onClick={resetFiltersHandler}>Reset</button>
-                    </div>
                     }>
-                        
                     </DefaultAccordion>
                     {expensesCards}
                 </Card>
+                {/* </ExpenseContext.Provider> */}
             </>
         )
     }
