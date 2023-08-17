@@ -1,5 +1,6 @@
 import React from "react";
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@nextui-org/react";
+import styles from "./CustomDropdown.module.css"
 
 // CustomDropdown.jsx
 const CustomDropdown = ({ items, selectedValue, onAction, className, label, onSelectionChange }) => {
@@ -7,7 +8,7 @@ const CustomDropdown = ({ items, selectedValue, onAction, className, label, onSe
         <Dropdown>
             <DropdownTrigger>
                 <Button
-                    className={`${className} text-md min-w-[50px] h-[35px]`}
+                    className={`${className} text-md min-w-[50px] h-[35px] ${styles['custom-dropdown']}`} //${styles['custom-dropdown']}
                     variant="solid"
                 >
                     {label ? label : selectedValue}

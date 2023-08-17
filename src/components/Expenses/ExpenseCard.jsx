@@ -1,11 +1,10 @@
 import ExpenseItem from './ExpenseItem';
 import styles from './ExpenseCard.module.css'
 import Card from '../UI/Card'
-import ExpenseFilter from './ExpenseFilter'
 import CustomDropdown from '../Utils/CustomDropdown';
 import { useState, useEffect } from 'react';
 import NewExpense from '../NewExpense/NewExpense';
-import { Accordion, AccordionItem } from "@nextui-org/react";
+// import { Accordion, AccordionItem } from "@nextui-org/react";
 
 const ExpenseCard = (props) => {
     const [selectedYear, setSelectedYear] = useState("All");
