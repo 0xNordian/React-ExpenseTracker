@@ -4,6 +4,7 @@ import Card from '../UI/Card'
 import CustomDropdown from '../Utils/CustomDropdown';
 import { useState, useEffect } from 'react';
 import NewExpense from '../NewExpense/NewExpense';
+import { DefaultAccordion } from '../Utils/DefaultAccordion';
 // import { Accordion, AccordionItem } from "@nextui-org/react";
 
 const ExpenseCard = (props) => {
@@ -32,15 +33,15 @@ const ExpenseCard = (props) => {
         shopping: "Shopping"
     };
 
-        //! Expense Year
-        const expYears = {
-            all: "All",
-            2019: "2019",
-            2020: "2020",
-            2021: "2021",
-            2022: "2022",
-            2023: "2023"
-        };
+    //! Expense Year
+    const expYears = {
+        all: "All",
+        2019: "2019",
+        2020: "2020",
+        2021: "2021",
+        2022: "2022",
+        2023: "2023"
+    };
 
     //! EXPENSES FROM APP.jsx FILTERED BY USER SELECTION
     const filteredExpenses = props.expensesArr.filter(item => {
@@ -88,7 +89,7 @@ const ExpenseCard = (props) => {
     const expensesCards = filteredCategoryExp
         .sort(sortOrder === 'asc' ? ascOrder : dscOrder)
         .map((expense) => (
-            <ExpenseItem key={expense.id} expense={expense} deleteExp={() => deleteSelExp(expense.id)} onFilterCategory={filterCategory}/>
+            <ExpenseItem key={expense.id} expense={expense} deleteExp={() => deleteSelExp(expense.id)} onFilterCategory={filterCategory} />
         ));
 
     const [numExp, setNumExp] = useState(() => 0)
@@ -174,7 +175,8 @@ const ExpenseCard = (props) => {
                             
                         </AccordionItem>
                     </Accordion> */}
-                    <div className={`${styles.filterAndCard} ${styles.glass} flex justify-around gap-4 `}>
+                    <DefaultAccordion filterBody={ 
+                        <div className={`${styles.filterAndCard} ${styles.glass} flex justify-around gap-4 `}>
                         <div className={`${styles['sort']} flex flex-col`}>
                             <span>Year</span>
                             {/* <ExpenseFilter onFilterExpense={filteredYear} /> */}
@@ -228,6 +230,9 @@ const ExpenseCard = (props) => {
                         </div>
                         <button className="transform hover:scale-105 transition-transform duration-300" onClick={resetFiltersHandler}>Reset</button>
                     </div>
+                    }>
+                        
+                    </DefaultAccordion>
                     {expensesCards}
                 </Card>
             </>

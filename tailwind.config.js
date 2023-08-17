@@ -7,6 +7,7 @@
 //   plugins: [],
 // }
 const { nextui } = require("@nextui-org/react");
+const withMT = require("@material-tailwind/react/utils/withMT");
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -24,7 +25,14 @@ export default {
   },
   darkMode: "class",
   plugins: [
+    nextui(),
+    withMT
     // require("daisyui"),
-    nextui()
+    // {
+    //   daisyui: {
+    //     // Disable DaisyUI's global styles
+    //     styled: false,
+    //   },
+    // },
   ],
 }
