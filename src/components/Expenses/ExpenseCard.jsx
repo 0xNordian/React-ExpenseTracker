@@ -5,7 +5,9 @@ import CustomDropdown from '../Utils/CustomDropdown';
 import { useState, useEffect, useContext } from 'react';
 import NewExpense from '../NewExpense/NewExpense';
 import { DefaultAccordion } from '../Utils/DefaultAccordion';
-import ExpenseContext from '../Context/ExpenseContext';
+// import ExpenseContext from '../Context/ExpenseContext';
+import TableView from "../TableView/TableView.jsx"
+import data from "../TableView/data.js"
 
 const ExpenseCard = (props) => {
     const [selectedYear, setSelectedYear] = useState("All");
@@ -89,7 +91,9 @@ const ExpenseCard = (props) => {
     const expensesCards = filteredCategoryExp
         .sort(sortOrder === 'asc' ? ascOrder : dscOrder)
         .map((expense) => (
-            <ExpenseItem key={expense.id} expense={expense} deleteExp={() => deleteSelExp(expense.id)} onFilterCategory={filterCategory} />
+            <>
+                <ExpenseItem key={expense.id} expense={expense} deleteExp={() => deleteSelExp(expense.id)} onFilterCategory={filterCategory} />
+            </>
         ));
 
     const [numExp, setNumExp] = useState(() => 0)
@@ -114,6 +118,7 @@ const ExpenseCard = (props) => {
 
     // console.log("filteredCategoryExp: ", filteredCategoryExp)
     // console.log("filteredExpenses: ", filteredExpenses)
+    data.updateExpData(filteredCategoryExp);
 
     //! NO EXPENSE FOUND
     if (props.expensesArr.length === 0) {
@@ -234,6 +239,7 @@ const ExpenseCard = (props) => {
                     }>
                     </DefaultAccordion>
                     {expensesCards}
+                    <TableView tableExpData={data.expData} columns={data.columns} />
                 </Card>
                 {/* </ExpenseContext.Provider> */}
             </>

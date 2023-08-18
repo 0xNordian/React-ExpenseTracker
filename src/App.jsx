@@ -1,22 +1,27 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ExpenseCard from "./components/Expenses/ExpenseCard";
 import TableView from "./components/TableView/TableView";
-import data from "./components/TableView/data.js" 
+// import data from "./components/TableView/data.js" 
 import styles from './App.module.css'
 
 const App = () => {
   const [expenses, setExpenses] = useState(() => []);
 
   const addExpenseHandler = (expense) => {
-    setExpenses((prevExpenses) => [expense, ...prevExpenses]);
-    data.updateExpData(expenses);
-  }
+  setExpenses((prevExpenses) => {
+    const updatedExpenses = [expense, ...prevExpenses];
+    // data.updateExpData(updatedExpenses);
+    return updatedExpenses;
+  });
+}
 
-  const deleteExpenseHandler = (selectedId) => {
-    const updatedExpenses = expenses.filter((obj) => obj.id !== selectedId);
-    setExpenses(updatedExpenses);
-    data.updateExpData(expenses);
-  };
+const deleteExpenseHandler = (selectedId) => {
+  setExpenses((prevExpenses) => {
+    const updatedExpenses = prevExpenses.filter((obj) => obj.id !== selectedId);
+    // data.updateExpData(updatedExpenses);
+    return updatedExpenses;
+  });
+};
 
   return (
     <div className={`${styles['main-container']}`}>
