@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ExpenseCard from "./components/Expenses/ExpenseCard";
-import TableView from "./components/TableView/TableView"
+import TableView from "./components/TableView/TableView";
+import data from "./components/TableView/data.js" 
 import styles from './App.module.css'
 
 const App = () => {
@@ -8,11 +9,13 @@ const App = () => {
 
   const addExpenseHandler = (expense) => {
     setExpenses((prevExpenses) => [expense, ...prevExpenses]);
+    data.updateExpData(expenses);
   }
 
   const deleteExpenseHandler = (selectedId) => {
     const updatedExpenses = expenses.filter((obj) => obj.id !== selectedId);
     setExpenses(updatedExpenses);
+    data.updateExpData(expenses);
   };
 
   return (
@@ -23,7 +26,7 @@ const App = () => {
       </div>
       <div className={`${styles['container']}`}>
         <ExpenseCard expensesArr={expenses} deleteExp={deleteExpenseHandler} addExpenseHandler={addExpenseHandler} />
-        {/* <TableView /> */}
+        {/* <TableView tableExpData={data.expData} columns={data.columns} /> */}
       </div>
     </div>
   )

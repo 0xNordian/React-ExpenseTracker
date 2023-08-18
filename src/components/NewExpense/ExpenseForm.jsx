@@ -120,7 +120,7 @@ const ExpenseForm = (props) => {
     //     groseryFood: "Grosery food",
     //     leisureFood: "Restaurant"
     // };
-    
+
     const [selectedCategory, setSelectedCategory] = useState(() => "");
     const [selectedCategDisplay, setSelectedCategDisplay] = useState(() => "")
 
@@ -206,7 +206,7 @@ const ExpenseForm = (props) => {
                         <Input
                             isRequired
                             label="Amount"
-                            className={amountError ? styles['amount-alert'] : ''}
+                            className={`${amountError ? styles['amount-alert'] : ''}`}
                             type='number'
                             name='expense-amount'
                             id='expense-amount'
@@ -225,6 +225,7 @@ const ExpenseForm = (props) => {
                                 label: value
                             }))}
                             selectedValue={selectedCategory}
+                            className="bg-[#99ddc8]"
                             label={selectedCategDisplay || "Select Category"}
                             // onAction={(e) => handleCategoryChange(e)} // Change this line
                             onAction={handleCategoryChange} // Change this line
