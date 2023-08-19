@@ -16,6 +16,7 @@ const ExpenseCard = (props) => {
     const [selectedCategory, setSelectedCategory] = useState('All');
     const initialSet = props.initialYear ? new Set([props.initialYear]) : new Set(["All"]);
     const [selectedKeys, setSelectedKeys] = useState(initialSet);
+    const [viewToggle, setViewToggle] = useState("Card");
 
     //! Expense Category
     const expCategories = {
@@ -91,9 +92,7 @@ const ExpenseCard = (props) => {
     const expensesCards = filteredCategoryExp
         .sort(sortOrder === 'asc' ? ascOrder : dscOrder)
         .map((expense) => (
-            <>
                 <ExpenseItem key={expense.id} expense={expense} deleteExp={() => deleteSelExp(expense.id)} onFilterCategory={filterCategory} />
-            </>
         ));
 
     const [numExp, setNumExp] = useState(() => 0)
@@ -113,6 +112,12 @@ const ExpenseCard = (props) => {
         setSelectedCategory("All");
         setSelectedYear((prev) => prev = "All");
     }
+
+    const viewToggleHandler = () => {
+        setViewToggle((prev) => prev === "Card" ? "Table" : "Card");
+    };
+
+    const viewBtnTitle = viewToggle === "Card" ? "Table" : "Card";
 
     // const filterIcon = <img src="/public/filter.png" alt="Filter Icon" className={styles['filter-icon']} />;
 
@@ -238,8 +243,10 @@ const ExpenseCard = (props) => {
                         </div>
                     }>
                     </DefaultAccordion>
-                    {expensesCards}
-                    <TableView tableExpData={data.expData} columns={data.columns} />
+                    <div className={`${""} text-white`}>
+                        <button className={`${"table-view"} text-white my-4`} onClick={viewToggleHandler}>{`${viewBtnTitle} view`}</button>
+                    </div>
+                    {viewToggle === "Card" ? expensesCards : <TableView tableExpData={data.expData} columns={data.columns} />}
                 </Card>
                 {/* </ExpenseContext.Provider> */}
             </>
