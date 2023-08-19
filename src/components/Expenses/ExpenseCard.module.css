@@ -42,13 +42,17 @@
 }
 
 .filterAndCard {
+    width: 97%;
     display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 5px;
+    justify-content: space-around;
+    position: relative;
+    left: 1rem;
+    /* justify-content: center; */
+    /* align-items: center; */
+    /* gap: 5px; */
     color: #fff;
     padding: .5rem 1.5rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0rem;
     /* border: 2px solid #fff; */
 }
 

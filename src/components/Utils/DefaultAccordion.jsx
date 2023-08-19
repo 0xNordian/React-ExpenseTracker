@@ -31,11 +31,11 @@ export function DefaultAccordion(props) {
 
     return (
         <>
-            <Accordion open={open === 1} icon={<Icon id={1} open={open} />}>
+            <Accordion open={open === 1} icon={<Icon id={1} open={open} />} className="w-[100%]">
                 <div className="w-full flex justify-end">
                     <div className="w-full flex justify-start">
                         <span className={`${styles['circle']} ${styles[filterStatus]}`}></span>
-                        <AccordionHeader onClick={() => handleOpen(1)} className={`filter invert mx-2 border-b-slate-950 `}>Filters</AccordionHeader>
+                        <AccordionHeader onClick={() => handleOpen(1)} className={`filter invert mx-2 border-b-slate-950 `}>{props.onAccordionName}</AccordionHeader>
                     </div>
                 </div>
                 <AccordionBody>

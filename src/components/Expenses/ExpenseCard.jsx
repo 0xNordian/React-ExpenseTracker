@@ -8,6 +8,7 @@ import { DefaultAccordion } from '../Utils/DefaultAccordion';
 // import ExpenseContext from '../Context/ExpenseContext';
 import TableView from "../TableView/TableView.jsx"
 import data from "../TableView/data.js"
+import CustomBtn from '../Utils/CustomBtn';
 
 const ExpenseCard = (props) => {
     const [selectedYear, setSelectedYear] = useState("All");
@@ -188,7 +189,7 @@ const ExpenseCard = (props) => {
                 <NewExpense expensesArr={props.expensesArr} addExpenseHandler={props.addExpenseHandler} numExp={numExp} totalExp={totalExp} onExpCategories={expCategories} />
 
                 <Card className={`${styles['expenses']} p-10`}>
-                    <DefaultAccordion filterBody={
+                    <DefaultAccordion onAccordionName={"Filters"} filterBody={
                         <div className={`${styles.filterAndCard} ${styles.glass} flex justify-around gap-4 `}>
                             <div className={`${styles['sort']} flex flex-col`}>
                                 <span>Year</span>
@@ -243,8 +244,8 @@ const ExpenseCard = (props) => {
                         </div>
                     }>
                     </DefaultAccordion>
-                    <div className={`${""} text-white`}>
-                        <button className={`${"table-view"} text-white my-4`} onClick={viewToggleHandler}>{`${viewBtnTitle} view`}</button>
+                    <div className={`${""} text-white mt-4`}>
+                        <button className={`${"table-view"} text-primary mb-4 relative left-5`} onClick={viewToggleHandler}>{`◎ ${viewBtnTitle} view`}</button>
                     </div>
                     {viewToggle === "Card" ? expensesCards : <TableView tableExpData={data.expData} columns={data.columns} />}
                 </Card>
