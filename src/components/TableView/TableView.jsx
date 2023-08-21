@@ -25,14 +25,27 @@ export default function TableView({ deleteExp, tableExpData, filterByCategory })
                 return new Date(cellValue).toLocaleDateString();
             case "displayCategory":
                 return (
+                    // <Chip
+                    //     className="bg-white text-sm scale-[85%] max-w-[100px] overflow-hidden truncate cursor-pointer hover:bg-[#283f3b] hover:text-[#99ddc8] transform hover:scale-90 transition-transform duration-300 hover:shadow-md"
+                    //     color="success"
+                    //     variant="dot"
+                    //     data-tip={cellValue}
+                    //     onClick={() => filterByCategory(cellValue)}
+                    // >
+                    //     {cellValue}
+                    // </Chip>
                     <Chip
-                        className="text-sm scale-[85%] cursor-pointer hover:bg-[#283f3b] hover:text-[#99ddc8] transform hover:scale-90 transition-transform duration-300 hover:shadow-md"
+                        className="bg-white text-sm scale-[85%] min-w-[100px] max-w-[120px] overflow-hidden truncate cursor-pointer hover:bg-[#283f3b] hover:text-[#99ddc8] transform hover:scale-90 transition-transform duration-300 hover:shadow-md"
                         color="success"
                         variant="dot"
+                        title={cellValue}
                         onClick={() => filterByCategory(cellValue)}
                     >
-                        {cellValue}
+                        {cellValue.length > 10
+                            ? `${cellValue.slice(0, 10)}...`
+                            : cellValue}
                     </Chip>
+
                 );
             case "amount":
                 return cellValue;
@@ -72,9 +85,9 @@ export default function TableView({ deleteExp, tableExpData, filterByCategory })
                 )}
             </TableHeader>
             <TableBody items={tableExpData}>
-                {(item) => (
-                    <TableRow key={item.id}>
-                        {(columnKey) => <TableCell className={columnKey === "title" ? "" : "text-center"}>{renderCell(item, columnKey)}</TableCell>}
+                {(item, index) => (
+                    <TableRow key={item.id} className={`bg-[#99ddc8] text-[#283F3B] ${index % 2 === 0 ? "even:bg-[#99ddc8] even:text-[#283F3B]" : "odd:bg-white odd:text-black"}`}>
+                        {(columnKey) => <TableCell className={`${columnKey === "title" ? "" : "text-center"}`}>{renderCell(item, columnKey)}</TableCell>}
                     </TableRow>
                 )}
             </TableBody>
