@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import ExpenseCard from "./components/Expenses/ExpenseCard";
 import TableView from "./components/TableView/TableView";
+import MobileWarning from "./components/Views/MobileWarning";
 // import data from "./components/TableView/data.js" 
 import styles from './App.module.css'
 
@@ -29,10 +30,11 @@ const deleteExpenseHandler = (selectedId) => {
         <h1 className="text-[#99ddc8] text-[2rem]">TrakEx</h1>
         <img className="w-[50px]" src="/money-wings.gif" />
       </div>
-      <div className={`${styles['container']}`}>
+      <div className={`${styles['container']} hidden md:block`}>
         <ExpenseCard expensesArr={expenses} deleteExp={deleteExpenseHandler} addExpenseHandler={addExpenseHandler} />
         {/* <TableView tableExpData={data.expData} columns={data.columns} /> */}
       </div>
+      <MobileWarning />
     </div>
   )
 }
