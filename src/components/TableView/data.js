@@ -4,6 +4,7 @@ const columns = [
     { name: "DATE", uid: "date" },
     { name: "CATEGORY", uid: "displayCategory" },
     { name: "AMOUNT", uid: "amount" },
+    { name: "ACTIONS", uid: "actions" },
 ];
 
 const expData = [];

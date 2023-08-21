@@ -1,4 +1,4 @@
-import styles from './ExpenseItem.module.css'
+import styles from './ExpenseItem.module.css' 
 import ExpenseDate from './ExpenseDate'
 import Card from '../UI/Card'
 import { useState } from 'react';
@@ -7,13 +7,14 @@ import { Chip } from "@nextui-org/react";
 const ExpenseItem = (props) => {
     const expenseData = props.expense;
     const expenseDate = props.expense.date;
-
+    // console.log("expenseData: ", expenseData)
     const [title, setTitle] = useState(() => expenseData.title);
     const [isEditing, setIsEditing] = useState(() => {
         return false;
     });
 
     const handleTitleInputChange = (event) => {
+        console.log("Helloooo!")
         setTitle(() => event.target.value);
     }
 
@@ -27,23 +28,17 @@ const ExpenseItem = (props) => {
 
     const isDeletedHandler = () => {
         // console.log("expenseData.id: ", expenseData.id)
-        props.deleteExp(expenseData.id);
+        props.deleteExp(props.id);
     }
 
     const filterByCategory = () => {
         props.onFilterCategory(expenseData.displayCategory);
     }
 
-
-    // console.log('isEditing:', isEditing);
-    // console.log('title:', title);
-    // console.log('displayCategory:', expenseData.displayCategory);
-
-
     return (
-        <Card className={styles['expense-item']}>
+        <Card className={`${styles['expense-item']}`}>
             <ExpenseDate dates={expenseDate} />
-            <div className={styles['expense-item__description']}>
+            <div className={`${styles['expense-item__description']}`}>
                 {isEditing ? (
                     <input
                         className={styles['expense_item__title-input']}
@@ -72,4 +67,4 @@ const ExpenseItem = (props) => {
     )
 }
 
-export default ExpenseItem; 
+export default ExpenseItem;

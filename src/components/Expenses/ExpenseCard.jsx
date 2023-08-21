@@ -71,6 +71,7 @@ const ExpenseCard = (props) => {
     // }
 
     const filterCategory = (selectedCategory) => {
+        console.log("TableView: ", selectedCategory)
         setSelectedCategory(selectedCategory)
     }
 
@@ -93,8 +94,15 @@ const ExpenseCard = (props) => {
     const expensesCards = filteredCategoryExp
         .sort(sortOrder === 'asc' ? ascOrder : dscOrder)
         .map((expense) => (
-                <ExpenseItem key={expense.id} expense={expense} deleteExp={() => deleteSelExp(expense.id)} onFilterCategory={filterCategory} />
+            <ExpenseItem
+                key={expense.id}
+                expense={expense}
+                deleteExp={() => deleteSelExp(expense.id)}
+                onFilterCategory={filterCategory}
+                id={expense.id}
+            />
         ));
+    // console.log("expensesCards: ", expensesCards)
 
     const [numExp, setNumExp] = useState(() => 0)
     const [totalExp, setTotalExp] = useState(0);
@@ -120,32 +128,86 @@ const ExpenseCard = (props) => {
 
     const viewBtnTitle = viewToggle === "Card" ? "Table" : "Card";
 
-    // const filterIcon = <img src="/public/filter.png" alt="Filter Icon" className={styles['filter-icon']} />;
-
-    // console.log("filteredCategoryExp: ", filteredCategoryExp)
-    // console.log("filteredExpenses: ", filteredExpenses)
     data.updateExpData(filteredCategoryExp);
 
-    //! NO EXPENSE FOUND
-    if (props.expensesArr.length === 0) {
-        return (
-            <>
-                <NewExpense expensesArr={props.expensesArr} addExpenseHandler={props.addExpenseHandler} numExp={numExp} totalExp={totalExp} onExpCategories={expCategories} />
-                <Card className={styles['expenses']}>
-                    <h2 className={styles['expenses__title']}>You don't have any expenses registered yet! 🤷‍♂️</h2>
-                </Card>
-            </>
-        )
-    } else if (expensesCards.length === 0) {
-        return (
-            <>
-                {/* <ExpenseContext.Provider value={{ selectedYear, selectedCategory }}> */}
-                <NewExpense expensesArr={props.expensesArr} addExpenseHandler={props.addExpenseHandler} numExp={numExp} totalExp={totalExp} onExpCategories={expCategories} />
-                <Card className={`${styles['expenses']} pl-6`}>
-                    <DefaultAccordion filterBody={
-                        <>
-                            <div className={`${styles['filterAndCard']} flex justify-between items-center mb-6 p-0 gap-4`}>
-                                <div className="flex flex-col justify-center items-center gap-2">
+    const handleTitleChange = (expenseId) => {
+        // Find the expense by ID
+        const expenseToEdit = filteredCategoryExp.find(expense => expense.id === expenseId);
+
+        const updateExpenses = filteredCategoryExp.map(expense => {
+            if (expense.id === expenseId) {
+                return { ...expense, title: expenseToEdit.title }
+            }
+            return expense;
+        }
+        )};
+
+        //! NO EXPENSE FOUND
+        if (props.expensesArr.length === 0) {
+            return (
+                <>
+                    <NewExpense expensesArr={props.expensesArr} addExpenseHandler={props.addExpenseHandler} numExp={numExp} totalExp={totalExp} onExpCategories={expCategories} />
+                    <Card className={styles['expenses']}>
+                        <h2 className={styles['expenses__title']}>You don't have any expenses registered yet! 🤷‍♂️</h2>
+                    </Card>
+                </>
+            )
+        } else if (expensesCards.length === 0) {
+            return (
+                <>
+                    {/* <ExpenseContext.Provider value={{ selectedYear, selectedCategory }}> */}
+                    <NewExpense expensesArr={props.expensesArr} addExpenseHandler={props.addExpenseHandler} numExp={numExp} totalExp={totalExp} onExpCategories={expCategories} />
+                    <Card className={`${styles['expenses']} pl-6`}>
+                        <DefaultAccordion filterBody={
+                            <>
+                                <div className={`${styles['filterAndCard']} flex justify-between items-center mb-6 p-0 gap-4`}>
+                                    <div className="flex flex-col justify-center items-center gap-2">
+                                        <span>Year</span>
+                                        <CustomDropdown
+                                            items={Object.entries(expYears).map(([key, value]) => ({
+                                                value: value,      // Corrected this line
+                                                label: value
+                                            }))}
+                                            selectedValue={selectedYear}
+                                            onAction={(selectedKey) => filteredYear(selectedKey)}
+                                            className="capitalize text-[#99ddc8] bg-[#283f3b] hover:bg-[#659b5e] hover:text-[#283f3b]"
+                                        />
+                                    </div>
+                                    <div className="flex flex-col justify-center items-center gap-2">
+                                        <span>Category</span>
+                                        <CustomDropdown
+                                            items={Object.entries(expCategories).map(([key, value]) => ({
+                                                value: value,      // Corrected this line
+                                                label: value
+                                            }))}
+                                            selectedValue={selectedCategory}
+                                            onAction={(selectedKey) => filterCategory(selectedKey)}
+                                            className="capitalize text-[#99ddc8] bg-[#283f3b] hover:bg-[#659b5e] hover:text-[#283f3b]"
+                                        />
+                                    </div>
+                                    <div className="ml-auto mr-2">
+                                        <button className="" onClick={resetFiltersHandler}>Reset</button>
+                                    </div>
+                                </div>
+                                <h2 className={styles['expenses__title']}>You don't have any expenses registered yet for {selectedCategory} in {selectedYear}! 🤷‍♂️</h2>
+                            </>
+                        }>
+                        </DefaultAccordion>
+                    </Card>
+                    {/* </ExpenseContext.Provider> */}
+                </>
+            )
+        } else {
+            //! EXPENSE RENDER
+            return (
+                <>
+                    {/* <ExpenseContext.Provider value={{ selectedYear, selectedCategory }}> */}
+                    <NewExpense expensesArr={props.expensesArr} addExpenseHandler={props.addExpenseHandler} numExp={numExp} totalExp={totalExp} onExpCategories={expCategories} />
+
+                    <Card className={`${styles['expenses']} p-10`}>
+                        <DefaultAccordion onAccordionName={"Filters"} filterBody={
+                            <div className={`${styles.filterAndCard} ${styles.glass} flex justify-around gap-4 `}>
+                                <div className={`${styles['sort']} flex flex-col`}>
                                     <span>Year</span>
                                     <CustomDropdown
                                         items={Object.entries(expYears).map(([key, value]) => ({
@@ -154,10 +216,10 @@ const ExpenseCard = (props) => {
                                         }))}
                                         selectedValue={selectedYear}
                                         onAction={(selectedKey) => filteredYear(selectedKey)}
-                                        className="capitalize text-[#99ddc8] bg-[#283f3b] hover:bg-[#659b5e] hover:text-[#283f3b]"
+                                        className="capitalize text-[#99ddc8] bg-[#283f3b] hover:bg-[#99ddc8] hover:text-[#283f3b] hover:border-[#283f3b]"
                                     />
                                 </div>
-                                <div className="flex flex-col justify-center items-center gap-2">
+                                <div className={`${styles['sort']} flex flex-col`}>
                                     <span>Category</span>
                                     <CustomDropdown
                                         items={Object.entries(expCategories).map(([key, value]) => ({
@@ -166,93 +228,57 @@ const ExpenseCard = (props) => {
                                         }))}
                                         selectedValue={selectedCategory}
                                         onAction={(selectedKey) => filterCategory(selectedKey)}
-                                        className="capitalize text-[#99ddc8] bg-[#283f3b] hover:bg-[#659b5e] hover:text-[#283f3b]"
+                                        className="capitalize text-[#99ddc8] bg-[#283f3b] hover:bg-[#99ddc8] hover:text-[#283f3b] hover:border-[#283f3b]"
                                     />
                                 </div>
-                                <div className="ml-auto mr-2">
-                                    <button className="" onClick={resetFiltersHandler}>Reset</button>
+                                <div className={`${styles['sort']} flex flex-col`}>
+                                    <span>Sort By</span>
+                                    <CustomDropdown
+                                        items={[
+                                            { value: 'amount', label: 'Amount' },
+                                            { value: 'date', label: 'Date' }
+                                        ]}
+                                        selectedValue={sortProperty}
+                                        onAction={(selectedKey) => handleSortChange(selectedKey, sortOrder)}
+                                        className="capitalize text-[#99ddc8] bg-[#283f3b] hover:bg-[#99ddc8] hover:text-[#283f3b] hover:border-[#283f3b]"
+                                    />
                                 </div>
+                                <div className={`${styles['sort']} flex flex-col`}>
+                                    <span>Order</span>
+                                    <CustomDropdown
+                                        items={[
+                                            { value: 'asc', label: '⬆️' },
+                                            { value: 'dsc', label: '⬇️' }
+                                        ]}
+                                        selectedValue={sortOrder}
+                                        onAction={(selectedKey) => handleSortChange(sortProperty, selectedKey)}
+                                        className="capitalize text-[#99ddc8] bg-[#283f3b] hover:bg-[#99ddc8] hover:text-[#283f3b] hover:border-[#283f3b]"
+                                        label={sortOrder === 'asc' ? '⬆️' : '⬇️'}
+                                    />
+                                </div>
+                                <button className="transform hover:scale-105 transition-transform duration-300" onClick={resetFiltersHandler}>Reset</button>
                             </div>
-                            <h2 className={styles['expenses__title']}>You don't have any expenses registered yet for {selectedCategory} in {selectedYear}! 🤷‍♂️</h2>
-                        </>
-                    }>
-                    </DefaultAccordion>
-                </Card>
-                {/* </ExpenseContext.Provider> */}
-            </>
-        )
-    } else {
-        //! EXPENSE RENDER
-        return (
-            <>
-                {/* <ExpenseContext.Provider value={{ selectedYear, selectedCategory }}> */}
-                <NewExpense expensesArr={props.expensesArr} addExpenseHandler={props.addExpenseHandler} numExp={numExp} totalExp={totalExp} onExpCategories={expCategories} />
-
-                <Card className={`${styles['expenses']} p-10`}>
-                    <DefaultAccordion onAccordionName={"Filters"} filterBody={
-                        <div className={`${styles.filterAndCard} ${styles.glass} flex justify-around gap-4 `}>
-                            <div className={`${styles['sort']} flex flex-col`}>
-                                <span>Year</span>
-                                <CustomDropdown
-                                    items={Object.entries(expYears).map(([key, value]) => ({
-                                        value: value,      // Corrected this line
-                                        label: value
-                                    }))}
-                                    selectedValue={selectedYear}
-                                    onAction={(selectedKey) => filteredYear(selectedKey)}
-                                    className="capitalize text-[#99ddc8] bg-[#283f3b] hover:bg-[#99ddc8] hover:text-[#283f3b] hover:border-[#283f3b]"
-                                />
-                            </div>
-                            <div className={`${styles['sort']} flex flex-col`}>
-                                <span>Category</span>
-                                <CustomDropdown
-                                    items={Object.entries(expCategories).map(([key, value]) => ({
-                                        value: value,      // Corrected this line
-                                        label: value
-                                    }))}
-                                    selectedValue={selectedCategory}
-                                    onAction={(selectedKey) => filterCategory(selectedKey)}
-                                    className="capitalize text-[#99ddc8] bg-[#283f3b] hover:bg-[#99ddc8] hover:text-[#283f3b] hover:border-[#283f3b]"
-                                />
-                            </div>
-                            <div className={`${styles['sort']} flex flex-col`}>
-                                <span>Sort By</span>
-                                <CustomDropdown
-                                    items={[
-                                        { value: 'amount', label: 'Amount' },
-                                        { value: 'date', label: 'Date' }
-                                    ]}
-                                    selectedValue={sortProperty}
-                                    onAction={(selectedKey) => handleSortChange(selectedKey, sortOrder)}
-                                    className="capitalize text-[#99ddc8] bg-[#283f3b] hover:bg-[#99ddc8] hover:text-[#283f3b] hover:border-[#283f3b]"
-                                />
-                            </div>
-                            <div className={`${styles['sort']} flex flex-col`}>
-                                <span>Order</span>
-                                <CustomDropdown
-                                    items={[
-                                        { value: 'asc', label: '⬆️' },
-                                        { value: 'dsc', label: '⬇️' }
-                                    ]}
-                                    selectedValue={sortOrder}
-                                    onAction={(selectedKey) => handleSortChange(sortProperty, selectedKey)}
-                                    className="capitalize text-[#99ddc8] bg-[#283f3b] hover:bg-[#99ddc8] hover:text-[#283f3b] hover:border-[#283f3b]"
-                                    label={sortOrder === 'asc' ? '⬆️' : '⬇️'}
-                                />
-                            </div>
-                            <button className="transform hover:scale-105 transition-transform duration-300" onClick={resetFiltersHandler}>Reset</button>
+                        }>
+                        </DefaultAccordion>
+                        <div className={`${""} text-white mt-4`}>
+                            <button className={`${"table-view"} text-primary mb-4 relative left-5`} onClick={viewToggleHandler}>{`◎ ${viewBtnTitle} view`}</button>
                         </div>
-                    }>
-                    </DefaultAccordion>
-                    <div className={`${""} text-white mt-4`}>
-                        <button className={`${"table-view"} text-primary mb-4 relative left-5`} onClick={viewToggleHandler}>{`◎ ${viewBtnTitle} view`}</button>
-                    </div>
-                    {viewToggle === "Card" ? expensesCards : <TableView tableExpData={data.expData} columns={data.columns} />}
-                </Card>
-                {/* </ExpenseContext.Provider> */}
-            </>
-        )
+                        {viewToggle === "Card" ?
+                        <div className="flex flex-col gap-3">
+                            {expensesCards}
+                        </div> :
+                            <TableView
+                                tableExpData={data.expData}
+                                columns={data.columns}
+                                deleteExp={deleteSelExp}
+                                editTitle={handleTitleChange}
+                                filterByCategory={filterCategory}
+                            />}
+                    </Card>
+                    {/* </ExpenseContext.Provider> */}
+                </>
+            )
+        }
     }
-}
 
-export default ExpenseCard;
+    export default ExpenseCard;
