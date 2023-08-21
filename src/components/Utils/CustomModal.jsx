@@ -8,7 +8,8 @@ const CustomModal = ({ isOpen, openModal, modalBody, modalBtnTitle, modalInnerTi
             <Modal
                 backdrop="blur"
                 isOpen={isOpen}
-                isDismissable={false}>
+                isDismissable={false}
+                >
                 <ModalContent>
 
                             <ModalHeader className="flex flex-col gap-1">{modalInnerTitle}</ModalHeader>

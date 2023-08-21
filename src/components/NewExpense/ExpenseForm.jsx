@@ -217,7 +217,7 @@ const ExpenseForm = (props) => {
                         />
                         {amountError && <p className={styles['error-message']}>Amount is required</p>}
                     </div>
-                    <div className='flex justify-center items-center gap-2 '>
+                    <div className='flex justify-center items-center gap-2'>
                         {selectedCategDisplay && <span>Category</span>}
                         <CustomDropdown
                             items={Object.entries(expCategories).map(([key, value]) => ({
