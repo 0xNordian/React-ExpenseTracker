@@ -34,17 +34,20 @@ export default function TableView({ deleteExp, tableExpData, filterByCategory })
                     // >
                     //     {cellValue}
                     // </Chip>
-                    <Chip
-                        className="bg-white text-sm scale-[85%] min-w-[100px] max-w-[120px] overflow-hidden truncate cursor-pointer hover:bg-[#283f3b] hover:text-[#99ddc8] transform hover:scale-90 transition-transform duration-300 hover:shadow-md"
-                        color="success"
-                        variant="dot"
-                        title={cellValue}
-                        onClick={() => filterByCategory(cellValue)}
-                    >
-                        {cellValue.length > 10
-                            ? `${cellValue.slice(0, 10)}...`
-                            : cellValue}
-                    </Chip>
+                    // <Tooltip classNames={{base: "bg-[#99ddc8] none"}}>
+                    <Tooltip content={cellValue.length > 10 ? cellValue : ""} classNames={{ base: cellValue.length > 10 ? "bg-gray-200" : "hidden" }}>
+                        <Chip
+                            className="bg-white text-sm scale-[85%] min-w-[100px] max-w-[120px] overflow-hidden truncate cursor-pointer hover:bg-[#283f3b] hover:text-[#99ddc8] transform hover:scale-90 transition-transform duration-300 hover:shadow-md"
+                            color="success"
+                            variant="dot"
+                            // title={cellValue}
+                            onClick={() => filterByCategory(cellValue)}
+                        >
+                            {cellValue.length > 10
+                                ? `${cellValue.slice(0, 10)}...`
+                                : cellValue}
+                        </Chip>
+                    </Tooltip>
 
                 );
             case "amount":
@@ -63,7 +66,7 @@ export default function TableView({ deleteExp, tableExpData, filterByCategory })
                                 <EditIcon />
                             </span>
                         </Tooltip> */}
-                        <Tooltip color="danger" content="Delete user">
+                        <Tooltip color="danger" content="Delete">
                             <span className="text-lg text-danger cursor-pointer active:opacity-50" onClick={() => deleteExp(item.id)}>
                                 <DeleteIcon />
                             </span>
@@ -87,7 +90,7 @@ export default function TableView({ deleteExp, tableExpData, filterByCategory })
             <TableBody items={tableExpData}>
                 {(item, index) => (
                     <TableRow key={item.id} className={`bg-[#99ddc8] text-[#283F3B] ${index % 2 === 0 ? "even:bg-[#99ddc8] even:text-[#283F3B]" : "odd:bg-white odd:text-black"}`}>
-                        {(columnKey) => <TableCell className={`${columnKey === "title" ? "" : "text-center"}`}>{renderCell(item, columnKey)}</TableCell>}
+                        {(columnKey) => <TableCell className={`${columnKey === "title" ? "font-bold" : "text-center"}`}>{renderCell(item, columnKey)}</TableCell>}
                     </TableRow>
                 )}
             </TableBody>
