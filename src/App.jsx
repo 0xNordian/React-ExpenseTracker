@@ -4,25 +4,28 @@ import TableView from "./components/TableView/TableView";
 import MobileWarning from "./components/Views/MobileWarning";
 // import data from "./components/TableView/data.js" 
 import styles from './App.module.css'
+import usePageVisibility from "./components/CustomHooks/usePageVisibility";
 
 const App = () => {
   const [expenses, setExpenses] = useState(() => []);
 
   const addExpenseHandler = (expense) => {
-  setExpenses((prevExpenses) => {
-    const updatedExpenses = [expense, ...prevExpenses];
-    // data.updateExpData(updatedExpenses);
-    return updatedExpenses;
-  });
-}
+    setExpenses((prevExpenses) => {
+      const updatedExpenses = [expense, ...prevExpenses];
+      // data.updateExpData(updatedExpenses);
+      return updatedExpenses;
+    });
+  }
 
-const deleteExpenseHandler = (selectedId) => {
-  setExpenses((prevExpenses) => {
-    const updatedExpenses = prevExpenses.filter((obj) => obj.id !== selectedId);
-    // data.updateExpData(updatedExpenses);
-    return updatedExpenses;
-  });
-};
+  const deleteExpenseHandler = (selectedId) => {
+    setExpenses((prevExpenses) => {
+      const updatedExpenses = prevExpenses.filter((obj) => obj.id !== selectedId);
+      // data.updateExpData(updatedExpenses);
+      return updatedExpenses;
+    });
+  };
+
+  usePageVisibility();
 
   return (
     <div className={`${styles['main-container']}`}>
